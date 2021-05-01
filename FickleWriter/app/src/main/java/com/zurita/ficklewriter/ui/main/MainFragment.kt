@@ -1,12 +1,12 @@
 package com.zurita.ficklewriter.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.zurita.ficklewriter.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.zurita.ficklewriter.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
 
@@ -14,11 +14,19 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
+    // This property is only valid following onActivityCreated
     private lateinit var viewModel: MainViewModel
+
+    private var _binding: MainFragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -26,5 +34,4 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // Use the ViewModel
     }
-
 }
