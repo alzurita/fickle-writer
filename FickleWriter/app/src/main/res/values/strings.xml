@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FickleWriter</string>
     <string name="helloworld">Hello World</string>
+   <string name="editor_textbox_hint">Write your text here</string>
 </resources>

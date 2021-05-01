@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:id="@+id/editor_panel"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".ui.main.MainFragment"
+   >
+
+   <!-- Gives appearance of the edit text box
+        filling the rest of the screen -->
+   <View
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginHorizontal="@dimen/gutter"
+      android:layout_marginTop="@dimen/editor_panel_header_size"
+      android:layout_marginBottom="@dimen/gutter"
+      android:background="@color/white"
+      android:elevation="3dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+   <!-- Text editor -->
+   <ScrollView
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginBottom="8dp"
+      android:elevation="3dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      >
+
+      <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:paddingHorizontal="@dimen/gutter"
+         android:paddingTop="@dimen/editor_panel_header_size"
+         >
+
+         <EditText
+            android:id="@+id/textbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="@string/editor_textbox_hint"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:padding="@dimen/gutter_textview"
+            >
+
+            <requestFocus />
+         </EditText>
+
+      </LinearLayout>
+
+   </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

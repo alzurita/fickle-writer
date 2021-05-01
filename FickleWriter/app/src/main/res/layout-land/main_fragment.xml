@@ -5,6 +5,7 @@
    android:id="@+id/main"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
+   android:orientation="horizontal"
    tools:context=".ui.main.MainFragment"
    >
 
@@ -29,8 +30,19 @@
       android:layout_height="0dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintStart_toStartOf="@id/guideline_editor_start"
       app:layout_constraintTop_toTopOf="parent"
+      />
+
+   <!-- Guideline to help figure out how large
+        the editor should be with respect to the
+        rest of the screen -->
+   <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline_editor_start"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent="0.5"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
