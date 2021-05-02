@@ -17,7 +17,6 @@
       android:layout_marginHorizontal="@dimen/gutter"
       android:layout_marginTop="@dimen/editor_panel_header_size"
       android:background="@color/white"
-      android:elevation="3dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +53,7 @@
             android:inputType="textMultiLine"
             android:minLines="5"
             android:padding="@dimen/gutter_textview"
+            android:elevation="3dp"
             >
 
             <requestFocus />
