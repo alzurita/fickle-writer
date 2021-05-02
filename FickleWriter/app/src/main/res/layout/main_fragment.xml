@@ -5,17 +5,15 @@
    android:id="@+id/main"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
+   android:background="@color/rajah"
    tools:context=".ui.main.MainFragment"
    >
 
-   <!-- Background image -->
    <ImageView
-      android:id="@+id/background_image"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_width="0dp"
+      android:layout_height="300dp"
       android:scaleType="centerCrop"
-      android:src="@drawable/bg_circles_sunrise"
-      app:layout_constraintBottom_toBottomOf="parent"
+      android:src="@drawable/bg_circle_sunrise"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"

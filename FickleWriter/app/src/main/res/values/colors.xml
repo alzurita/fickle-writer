@@ -9,14 +9,18 @@
    <color name="black">#FF000000</color>
    <color name="white">#FFFFFFFF</color>
 
-   <!-- Theme defaults -->
+   <!-- Sunrise Theme (default) -->
+
+   <!-- Primary colors -->
    <color name="carnation">#FFF76B5E</color>
    <color name="apple_blossom">#FFA2463E</color>
    <color name="cocoa_bean">#FF4D211D</color>
-
+   <!-- Secondary colors -->
    <color name="linen">#FFFAF2EA</color>
    <color name="dawn">#FFA5A09A</color>
    <color name="fuscous_gray">#FF504D4B</color>
+   <!-- Background that matches the bg_circle_sunrise image -->
+   <color name="rajah">#f5b968</color>
 
    <!-- Other nice colors -->
    <color name="canary">#FFCBF75E</color>
