@@ -1,47 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-   xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:id="@+id/main"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   android:orientation="horizontal"
    tools:context=".ui.main.MainFragment"
    >
 
-   <ImageView
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:scaleType="centerCrop"
-      android:src="@drawable/bg_circle_sunrise"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:ignore="ContentDescription"
-      />
+   <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
 
-   <!-- Editor panel -->
-   <include
-      layout="@layout/editor_panel"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@id/guideline_editor_start"
-      app:layout_constraintTop_toTopOf="parent"
-      />
+      <!-- Background image -->
+      <ImageView
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         android:scaleType="centerCrop"
+         android:src="@drawable/bg_circle_sunrise"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         tools:ignore="ContentDescription"
+         />
 
-   <!-- Guideline to help figure out how large
-        the editor should be with respect to the
-        rest of the screen -->
-   <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/guideline_editor_start"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:layout_constraintGuide_percent="0.5"
-      />
+      <!-- Make the edit text appear to be extended all
+           the way down to the bottom of the screen. -->
+      <View
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         android:layout_marginHorizontal="@dimen/gutter"
+         android:background="@color/white"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="@id/guideline_editor_start"
+         app:layout_constraintTop_toTopOf="@id/editor"
+         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+      <!-- Edit button -->
+      <ImageButton
+         android:id="@+id/edit_title_button"
+         style="?android:attr/borderlessButtonStyle"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         android:layout_margin="@dimen/gutter"
+         android:src="@drawable/ic_edit_pencil"
+         app:layout_constraintStart_toStartOf="@id/guideline_editor_start"
+         app:layout_constraintTop_toTopOf="parent"
+         android:contentDescription="@string/edit"
+         />
+
+      <!-- Title -->
+      <TextView
+         android:id="@+id/title_textview"
+         android:layout_width="wrap_content"
+         android:layout_height="0dp"
+         android:gravity="center_vertical"
+         android:text="@string/title_default"
+         android:textSize="@dimen/title_textsize"
+         app:layout_constraintBottom_toBottomOf="@id/edit_title_button"
+         app:layout_constraintStart_toEndOf="@id/edit_title_button"
+         app:layout_constraintTop_toTopOf="@id/edit_title_button"
+         />
+
+      <!-- Editor panel -->
+      <include
+         android:id="@+id/editor"
+         layout="@layout/editor_panel"
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="@id/guideline_editor_start"
+         app:layout_constraintTop_toBottomOf="@id/title_textview"
+         />
+
+      <!-- Guideline to help figure out how large
+           the editor should be with respect to the
+           rest of the screen -->
+      <androidx.constraintlayout.widget.Guideline
+         android:id="@+id/guideline_editor_start"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         app:layout_constraintGuide_percent="0.5"
+         />
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

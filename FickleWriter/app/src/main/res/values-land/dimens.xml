@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <dimen name="editor_panel_header_size">20dp</dimen>
+   <dimen name="editor_panel_header_size">0dp</dimen>
 </resources>

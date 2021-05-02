@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:id="@+id/main"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   android:background="@color/rajah"
    tools:context=".ui.main.MainFragment"
    >
 
-   <ImageView
-      android:layout_width="0dp"
-      android:layout_height="300dp"
-      android:scaleType="centerCrop"
-      android:src="@drawable/bg_circle_sunrise"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:ignore="ContentDescription"
-      />
+   <!-- In order to use the collapsing toolbar,
+        all three layers are necessary. -->
+   <androidx.coordinatorlayout.widget.CoordinatorLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/rajah"
+      tools:context=".ui.main.MainFragment"
+      >
 
-   <!-- Editor panel -->
-   <include
-      layout="@layout/editor_panel"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
+      <!-- Make the edit text appear to be extended all
+           the way down to the bottom of the screen. -->
+      <View
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_marginHorizontal="@dimen/gutter"
+         android:background="@color/white"
+         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+      <com.google.android.material.appbar.AppBarLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         >
+
+         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editor_panel_header_size"
+            android:background="@drawable/bg_circle_sunrise"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="@string/title_default"
+            app:toolbarId="@id/toolbar"
+            >
+
+            <!-- Title and edit button are part of the toolbar -->
+            <Toolbar
+               android:id="@+id/toolbar"
+               android:layout_width="match_parent"
+               android:layout_height="?attr/actionBarSize"
+               android:background="?attr/colorPrimary"
+               app:layout_collapseMode="pin"
+               app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
+               />
+
+         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+      </com.google.android.material.appbar.AppBarLayout>
+
+      <!-- Editor panel -->
+      <include layout="@layout/editor_panel" />
+
+   </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

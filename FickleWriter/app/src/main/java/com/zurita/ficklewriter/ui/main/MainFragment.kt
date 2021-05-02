@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -29,9 +30,10 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // Use the ViewModel
+        binding.toolbar?.inflateMenu(R.menu.toolbar)
     }
 }

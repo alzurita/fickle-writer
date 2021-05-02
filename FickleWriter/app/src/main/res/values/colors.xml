@@ -12,18 +12,24 @@
    <!-- Sunrise Theme (default) -->
 
    <!-- Primary colors -->
-   <color name="carnation">#FFF76B5E</color>
-   <color name="apple_blossom">#FFA2463E</color>
-   <color name="cocoa_bean">#FF4D211D</color>
+   <color name="rajah">#f5b968</color>
+   <color name="cape_pallister">#a07944</color>
+   <color name="iroko">#4b3920</color>
    <!-- Secondary colors -->
+   <color name="cornflower_blue">#68a4f5</color>
+   <color name="san_marino">#446ba0</color>
+   <color name="cloud_burst">#20324b</color>
+
    <color name="linen">#FFFAF2EA</color>
    <color name="dawn">#FFA5A09A</color>
    <color name="fuscous_gray">#FF504D4B</color>
-   <!-- Background that matches the bg_circle_sunrise image -->
-   <color name="rajah">#f5b968</color>
 
    <!-- Other nice colors -->
    <color name="canary">#FFCBF75E</color>
    <color name="sushi">#FF85A23E</color>
    <color name="thatch_green">#FF3F4D1D</color>
+
+   <color name="carnation">#FFF76B5E</color>
+   <color name="apple_blossom">#FFA2463E</color>
+   <color name="cocoa_bean">#FF4D211D</color>
 </resources>
