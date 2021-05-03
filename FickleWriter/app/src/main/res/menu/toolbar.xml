@@ -2,11 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+   <!--
+        The app: namespace belongs to the support
+        library, therefore it is incompatible with
+        Views that are not also part of support
+        library.
+        i.e. This means we have to use it with
+        androidx.appcompat.widget.Toolbar, not
+        just Toolbar.
+   -->
    <item android:id="@+id/edit_title"
       android:icon="@drawable/ic_edit_pencil"
-      android:iconTint="@color/white"
       android:title="@string/edit"
-      app:showAsAction="ifRoom|withText"
+      app:showAsAction="ifRoom"
       />
 
 </menu>

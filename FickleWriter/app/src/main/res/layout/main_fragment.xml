@@ -42,7 +42,7 @@
             >
 
             <!-- Title and edit button are part of the toolbar -->
-            <Toolbar
+            <androidx.appcompat.widget.Toolbar
                android:id="@+id/toolbar"
                android:layout_width="match_parent"
                android:layout_height="?attr/actionBarSize"
