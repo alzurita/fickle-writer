@@ -11,10 +11,11 @@
         androidx.appcompat.widget.Toolbar, not
         just Toolbar.
    -->
-   <item android:id="@+id/edit_title"
+   <item
+      android:id="@+id/edit_title"
       android:icon="@drawable/ic_edit_pencil"
+      android:onClick="onMenuItemSelected"
       android:title="@string/edit"
-      app:showAsAction="ifRoom"
-      />
+      app:showAsAction="ifRoom" />
 
 </menu>

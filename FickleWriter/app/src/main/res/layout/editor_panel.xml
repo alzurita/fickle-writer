@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-   xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto"
-   android:id="@+id/editor_panel"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
    android:layout_marginHorizontal="@dimen/gutter"
    app:layout_behavior="@string/appbar_scrolling_view_behavior"
    >
 
-      <LinearLayout
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingHorizontal="@dimen/gutter"
+      >
+
+      <EditText
+         android:id="@+id/textbox"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:orientation="vertical"
-         android:paddingHorizontal="@dimen/gutter"
+         android:background="@color/white"
+         android:gravity="top"
+         android:hint="@string/editor_textbox_hint"
+         android:importantForAutofill="no"
+         android:inputType="textMultiLine"
+         android:minLines="5"
+         android:padding="@dimen/gutter_textview"
+         android:textIsSelectable="true"
          >
 
-         <EditText
-            android:id="@+id/textbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="top"
-            android:hint="@string/editor_textbox_hint"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:minLines="5"
-            android:padding="@dimen/gutter_textview"
-            >
+         <requestFocus />
+      </EditText>
 
-            <requestFocus />
-         </EditText>
-
-      </LinearLayout>
+   </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

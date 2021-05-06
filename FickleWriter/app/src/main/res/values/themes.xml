@@ -15,10 +15,6 @@
    </style>
 
     <!-- ImageButton style: Set this for each ImageButton individually -->
-    <style name="ImageButtonStyle" parent="Widget.AppCompat.ImageButton">
-       <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-       <item name="android:padding">@dimen/gutter</item>
-    </style>
 
    <!-- Activity fade in animation -->
    <style name="WindowAnimationTransition">

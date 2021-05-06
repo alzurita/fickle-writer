@@ -2,10 +2,8 @@
 <resources>
    <!-- Android default colors -->
    <color name="purple_200">#FFBB86FC</color>
-   <color name="purple_500">#FF6200EE</color>
    <color name="purple_700">#FF3700B3</color>
    <color name="teal_200">#FF03DAC5</color>
-   <color name="teal_700">#FF018786</color>
    <color name="black">#FF000000</color>
    <color name="white">#FFFFFFFF</color>
 
@@ -14,22 +12,10 @@
    <!-- Primary colors -->
    <color name="rajah">#f5b968</color>
    <color name="cape_pallister">#a07944</color>
-   <color name="iroko">#4b3920</color>
    <!-- Secondary colors -->
    <color name="cornflower_blue">#68a4f5</color>
    <color name="san_marino">#446ba0</color>
-   <color name="cloud_burst">#20324b</color>
-
-   <color name="linen">#FFFAF2EA</color>
-   <color name="dawn">#FFA5A09A</color>
-   <color name="fuscous_gray">#FF504D4B</color>
 
    <!-- Other nice colors -->
-   <color name="canary">#FFCBF75E</color>
-   <color name="sushi">#FF85A23E</color>
-   <color name="thatch_green">#FF3F4D1D</color>
 
-   <color name="carnation">#FFF76B5E</color>
-   <color name="apple_blossom">#FFA2463E</color>
-   <color name="cocoa_bean">#FF4D211D</color>
 </resources>
