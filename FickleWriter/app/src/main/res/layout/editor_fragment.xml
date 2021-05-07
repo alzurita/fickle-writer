@@ -16,16 +16,8 @@
       tools:context=".ui.main.EditorFragment"
       >
 
-      <!-- Make the edit text appear to be extended all
-           the way down to the bottom of the screen. -->
-      <View
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_marginHorizontal="@dimen/gutter"
-         android:background="@color/white"
-         />
-
       <com.google.android.material.appbar.AppBarLayout
+         android:id="@+id/app_bar"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          >
@@ -54,10 +46,9 @@
 
       </com.google.android.material.appbar.AppBarLayout>
 
-      <!-- Editor panel -->
       <include
-         android:id="@+id/editor"
-         layout="@layout/editor_panel"
+         android:id="@+id/main_panel"
+         layout="@layout/main_panel"
          />
 
    </androidx.coordinatorlayout.widget.CoordinatorLayout>
