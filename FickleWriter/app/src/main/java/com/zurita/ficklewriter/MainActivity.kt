@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.zurita.ficklewriter.ui.main.MainFragment
-import com.zurita.ficklewriter.ui.main.MainViewModel
+import com.zurita.ficklewriter.ui.main.EditorFragment
+import com.zurita.ficklewriter.ui.main.EditorViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, EditorFragment.newInstance())
                 .commitNow()
         }
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
      * Called when a menu item from the toolbar is selected.
      */
     fun onMenuItemSelected(item: MenuItem) {
-        val model by viewModels<MainViewModel>()
+        val model by viewModels<EditorViewModel>()
         when (item.itemId) {
             R.id.edit_title -> model.toggleEditMode()
         }

@@ -3,7 +3,7 @@ package com.zurita.ficklewriter.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MainViewModel : ViewModel() {
+class EditorViewModel : ViewModel() {
 
     // Backing fields used internally
     private val _editModeEnabled = MutableLiveData(false)

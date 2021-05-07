@@ -10,10 +10,10 @@ import androidx.fragment.app.activityViewModels
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.MainFragmentBinding
 
-class MainFragment : Fragment() {
+class EditorFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = EditorFragment()
     }
 
     private var _binding: MainFragmentBinding? = null
@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.inflateMenu(R.menu.toolbar)
 
-        val model by activityViewModels<MainViewModel>()
+        val model by activityViewModels<EditorViewModel>()
 
         // Save the KeyListener by putting it into the tag of its textbox,
         // then continue to set it based on the model. Setting the KeyListener

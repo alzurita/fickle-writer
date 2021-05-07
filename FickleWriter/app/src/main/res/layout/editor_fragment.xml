@@ -4,7 +4,7 @@
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
-   tools:context=".ui.main.MainFragment"
+   tools:context=".ui.main.EditorFragment"
    >
 
    <!-- In order to use the collapsing toolbar,
@@ -13,7 +13,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/rajah"
-      tools:context=".ui.main.MainFragment"
+      tools:context=".ui.main.EditorFragment"
       >
 
       <!-- Make the edit text appear to be extended all
@@ -31,6 +31,7 @@
          >
 
          <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/title_toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/editor_panel_header_size"
             android:background="@drawable/bg_circle_sunrise"
