@@ -12,13 +12,6 @@
    android:orientation="vertical"
    >
 
-   <View
-      android:id="@+id/divider"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/alto"
-      />
-
    <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

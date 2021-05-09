@@ -2,8 +2,17 @@ package com.zurita.ficklewriter.ui.main
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.zurita.ficklewriter.databinding.NoteBinding
 
-class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class NoteViewHolder(
+   itemView: View,
+   private val onClickListener: (position: Int) -> Unit
+) : RecyclerView.ViewHolder(itemView)
 {
+   private val binding = NoteBinding.bind(itemView)
 
+   init
+   {
+      itemView.setOnClickListener { onClickListener(adapterPosition) }
+   }
 }
