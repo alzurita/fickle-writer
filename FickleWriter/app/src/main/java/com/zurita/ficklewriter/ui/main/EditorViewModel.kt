@@ -2,7 +2,5 @@ package com.zurita.ficklewriter.ui.main
 
 import androidx.lifecycle.ViewModel
 
-class EditorViewModel : ViewModel() {
-
-
-}
+class EditorViewModel
+   : ViewModel()

@@ -9,8 +9,6 @@ class NoteViewHolder(
    private val onClickListener: (position: Int) -> Unit
 ) : RecyclerView.ViewHolder(itemView)
 {
-   private val binding = NoteBinding.bind(itemView)
-
    init
    {
       itemView.setOnClickListener { onClickListener(adapterPosition) }

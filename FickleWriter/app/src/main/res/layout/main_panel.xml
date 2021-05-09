@@ -15,37 +15,8 @@
       android:paddingHorizontal="@dimen/gutter"
       >
 
-      <androidx.appcompat.widget.AppCompatTextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/gutter"
-         android:text="@string/summary"
-         />
-
-      <include layout="@layout/story_overview" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/gutter"
-         android:text="@string/notes"
-         />
-
       <androidx.recyclerview.widget.RecyclerView
          android:id="@+id/notes_list"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         />
-
-      <androidx.appcompat.widget.AppCompatTextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/gutter"
-         android:text="@string/chapters"
-         />
-
-      <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/chapters_list"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          />

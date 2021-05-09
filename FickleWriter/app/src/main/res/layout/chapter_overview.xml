@@ -12,7 +12,7 @@
       <androidx.appcompat.widget.AppCompatTextView
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="Chapter"
+         android:text="@string/chapters"
          />
 
    </androidx.appcompat.widget.LinearLayoutCompat>

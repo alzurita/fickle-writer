@@ -1,7 +1,7 @@
 package com.zurita.ficklewriter.ui.main
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
@@ -11,10 +11,9 @@ class NoteViewAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
    private val itemTypeList = mutableListOf(
-      NoteHeader, NoteHeader, NoteHeader
+      SummarySection,  SummaryHeader, NoteSection, NoteHeader, NoteHeader, NoteHeader,
+      ChapterSection, ChapterHeader, ChapterHeader, End
    )
-
-   private var previousIndexSelected = -1
 
    override fun onCreateViewHolder(
       parent: ViewGroup,
@@ -23,15 +22,45 @@ class NoteViewAdapter(
    {
       return when (viewType)
       {
+         SummarySection ->
+         {
+            val view = inflater.inflate(R.layout.section_header, parent, false)
+            SummarySectionViewHolder(view)
+         }
+         SummaryHeader ->
+         {
+            val view = inflater.inflate(R.layout.story_overview, parent, false)
+            SummaryHeaderViewHolder(view)
+         }
+         NoteSection ->
+         {
+            val view = inflater.inflate(R.layout.section_header, parent, false)
+            NoteSectionViewHolder(view)
+         }
          NoteHeader ->
          {
             val view = inflater.inflate(R.layout.note, parent, false)
-            NoteViewHolder(view) { position -> onItemSelected(position) }
+            NoteViewHolder(view) { position -> onNoteHeaderSelected(position) }
          }
-         else ->
+         NoteOptions ->
          {
             val view = inflater.inflate(R.layout.note_options, parent, false)
             NoteOptionsViewHolder(view)
+         }
+         ChapterSection ->
+         {
+            val view = inflater.inflate(R.layout.section_header, parent, false)
+            ChapterSectionViewHolder(view)
+         }
+         ChapterHeader ->
+         {
+            val view = inflater.inflate(R.layout.chapter_overview, parent, false)
+            ChapterViewHolder(view)
+         }
+         else ->
+         {
+            val view = View(parent.context)
+            EndViewHolder(view)
          }
       }
    }
@@ -51,10 +80,10 @@ class NoteViewAdapter(
 
    override fun getItemViewType(position: Int): Int
    {
-      return if (position < 0 || position >= itemCount) None else itemTypeList[position]
+      return if (position < 0 || position >= itemCount) Start else itemTypeList[position]
    }
 
-   private fun onItemSelected(position: Int)
+   private fun onNoteHeaderSelected(position: Int)
    {
       val itemOneBelowPos = position + 1
       when (getItemViewType(itemOneBelowPos))
@@ -80,8 +109,18 @@ class NoteViewAdapter(
 
    companion object
    {
-      private const val None = 0
-      private const val NoteHeader = 1
-      private const val NoteOptions = 2
+      private const val Start = 0
+
+      private const val SummarySection = 1
+      private const val SummaryHeader = 2
+
+      private const val NoteSection = 10
+      private const val NoteHeader = 11
+      private const val NoteOptions = 12
+
+      private const val ChapterSection = 20
+      private const val ChapterHeader = 21
+
+      private const val End = 100
    }
 }

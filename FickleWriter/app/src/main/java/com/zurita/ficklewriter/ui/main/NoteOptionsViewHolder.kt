@@ -6,4 +6,3 @@ import androidx.recyclerview.widget.RecyclerView
 class NoteOptionsViewHolder(
    itemView: View
 ) : RecyclerView.ViewHolder(itemView)
-{}

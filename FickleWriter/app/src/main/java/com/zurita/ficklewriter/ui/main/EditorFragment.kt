@@ -49,9 +49,5 @@ class EditorFragment : Fragment()
       binding.mainPanel?.notesList?.adapter = NoteViewAdapter(layoutInflater)
       binding.mainPanel?.notesList?.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-
-      binding.mainPanel?.chaptersList?.adapter = ChapterViewAdapter(layoutInflater)
-      binding.mainPanel?.chaptersList?.layoutManager =
-            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
    }
 }

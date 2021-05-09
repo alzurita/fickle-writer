@@ -11,14 +11,6 @@
    android:layout_marginTop="@dimen/gutter"
    >
 
-   <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      >
-
-      <include layout="@layout/note_header" />
-      
-   </androidx.appcompat.widget.LinearLayoutCompat>
+   <include layout="@layout/note_header" />
 
 </androidx.cardview.widget.CardView>
