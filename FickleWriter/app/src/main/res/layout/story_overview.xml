@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+   xmlns:android="http://schemas.android.com/apk/res/android"
    android:layout_width="match_parent"
    android:layout_height="wrap_content"
+   android:layout_marginVertical="@dimen/gutter"
    >
 
       <androidx.appcompat.widget.AppCompatTextView
-         android:layout_width="match_parent"
-         android:layout_height="100dp"
-         android:text="Description of the text."
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/gutter"
+         android:paddingHorizontal="@dimen/gutter"
+         android:text="@string/example_description"
          />
 
 </androidx.cardview.widget.CardView>

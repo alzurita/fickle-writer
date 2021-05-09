@@ -4,4 +4,5 @@
    <dimen name="gutter_textview">16dp</dimen>
    <dimen name="editor_panel_header_size">300dp</dimen>
    <dimen name="title_textsize">20sp</dimen>
+   <dimen name="gutter_small">4dp</dimen>
 </resources>

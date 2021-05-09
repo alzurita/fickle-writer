@@ -11,14 +11,22 @@
       <item name="colorOnSecondary">@color/black</item>
       <!-- Status bar color. -->
       <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+      <!-- Window animation -->
       <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+      <!-- Specific view styles -->
+      <item name="android:buttonStyle">@style/Button</item>
    </style>
-
-    <!-- ImageButton style: Set this for each ImageButton individually -->
-
+   
    <!-- Activity fade in animation -->
    <style name="WindowAnimationTransition">
       <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
       <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+   </style>
+
+   <!-- Button style -->
+   <style name="Button" parent="Widget.AppCompat.Button">
+      <item name="android:textAllCaps">false</item>
+      <item name="android:textStyle">normal</item>
+      <item name="android:textColor">?android:attr/textColorSecondary</item>
    </style>
 </resources>

@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.EditorFragmentBinding
 
-class EditorFragment : Fragment() {
+class EditorFragment : Fragment()
+{
 
-   companion object {
+   companion object
+   {
       fun newInstance() = EditorFragment()
    }
 
@@ -25,14 +27,20 @@ class EditorFragment : Fragment() {
    private val binding get() = _binding!!
 
    override fun onCreateView(
-      inflater: LayoutInflater, container: ViewGroup?,
+      inflater: LayoutInflater,
+      container: ViewGroup?,
       savedInstanceState: Bundle?
-   ): View {
+   ): View
+   {
       _binding = EditorFragmentBinding.inflate(inflater, container, false)
       return binding.root
    }
 
-   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+   override fun onViewCreated(
+      view: View,
+      savedInstanceState: Bundle?
+   )
+   {
       super.onViewCreated(view, savedInstanceState)
       binding.toolbar.inflateMenu(R.menu.toolbar)
 
@@ -40,10 +48,10 @@ class EditorFragment : Fragment() {
 
       binding.mainPanel?.notesList?.adapter = NoteViewAdapter(layoutInflater)
       binding.mainPanel?.notesList?.layoutManager =
-         LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
       binding.mainPanel?.chaptersList?.adapter = ChapterViewAdapter(layoutInflater)
       binding.mainPanel?.chaptersList?.layoutManager =
-         LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
    }
 }

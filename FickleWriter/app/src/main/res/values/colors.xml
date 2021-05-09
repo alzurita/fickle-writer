@@ -7,7 +7,9 @@
    <color name="black">#FF000000</color>
    <color name="white">#FFFFFFFF</color>
 
-   <!-- Sunrise Theme (default) -->
+   <!--
+      Sunrise Theme (default)
+    -->
 
    <!-- Primary colors -->
    <color name="rajah">#f5b968</color>
@@ -16,6 +18,12 @@
    <color name="cornflower_blue">#68a4f5</color>
    <color name="san_marino">#446ba0</color>
 
-   <!-- Other nice colors -->
+
+   <!--
+      Shades of grey
+    -->
+
+   <color name="alto">#D1D1D1</color>
+   <color name="seashell">#F1F1F1</color>
 
 </resources>

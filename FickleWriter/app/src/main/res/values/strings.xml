@@ -3,4 +3,11 @@
    <string name="editor_textbox_hint">Write your text here</string>
    <string name="edit">Edit</string>
    <string name="title_default">Placeholder</string>
+   <string name="example_description">This is a story of a person that never makes up her mind, who likes a design one day and then trashes it the next. Eventually she learns to live with being adequate, rather than being great.</string>
+   <string name="example_note_title">Note Title Would Go Here</string>
+   <string name="example_short_description">A short description of the note.</string>
+   <string name="pin">Pin</string>
+   <string name="summary">Summary</string>
+   <string name="notes">Notes</string>
+   <string name="chapters">Chapters</string>
 </resources>

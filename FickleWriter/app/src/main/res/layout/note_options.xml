@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+   This layout is for expanding a view to include
+   selectable options in a simple linear layout
+   with a borderline at the top.
+ -->
+<androidx.appcompat.widget.LinearLayoutCompat
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:orientation="vertical"
+   >
+
+   <View
+      android:id="@+id/divider"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/alto"
+      />
+
+   <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/seashell"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:weightSum="2"
+      android:padding="@dimen/gutter"
+      >
+
+      <androidx.appcompat.widget.AppCompatButton
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:text="@string/pin"
+         android:gravity="bottom|center_horizontal"
+         android:background="@drawable/bg_image_text_button"
+         android:layout_weight="1"
+         />
+
+      <androidx.appcompat.widget.AppCompatButton
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:text="@string/edit"
+         android:gravity="bottom|center_horizontal"
+         android:background="@drawable/bg_image_text_button"
+         android:layout_weight="1"
+         />
+
+      <!-- Add more items as necessary -->
+
+   </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
