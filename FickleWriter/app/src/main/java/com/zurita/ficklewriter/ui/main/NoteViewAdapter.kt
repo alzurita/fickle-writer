@@ -15,6 +15,11 @@ class NoteViewAdapter(
       ChapterSection, ChapterHeader, ChapterHeader, End
    )
 
+   // Dummy items because I don't have objects for these
+   private val summary = listOf(SummaryHeader)
+   private val notes = mutableListOf(NoteHeader, NoteHeader, NoteHeader)
+   private val chapters = mutableListOf(ChapterHeader, ChapterHeader, ChapterHeader, ChapterHeader)
+
    override fun onCreateViewHolder(
       parent: ViewGroup,
       viewType: Int
@@ -25,7 +30,7 @@ class NoteViewAdapter(
          SummarySection ->
          {
             val view = inflater.inflate(R.layout.section_header, parent, false)
-            SummarySectionViewHolder(view)
+            SummarySectionViewHolder(view) { position -> onSectionSelected(position) }
          }
          SummaryHeader ->
          {
@@ -35,7 +40,7 @@ class NoteViewAdapter(
          NoteSection ->
          {
             val view = inflater.inflate(R.layout.section_header, parent, false)
-            NoteSectionViewHolder(view)
+            NoteSectionViewHolder(view) { position -> onSectionSelected(position) }
          }
          NoteHeader ->
          {
@@ -50,7 +55,7 @@ class NoteViewAdapter(
          ChapterSection ->
          {
             val view = inflater.inflate(R.layout.section_header, parent, false)
-            ChapterSectionViewHolder(view)
+            ChapterSectionViewHolder(view) { position -> onSectionSelected(position) }
          }
          ChapterHeader ->
          {
@@ -83,8 +88,51 @@ class NoteViewAdapter(
       return if (position < 0 || position >= itemCount) Start else itemTypeList[position]
    }
 
+   private fun onSectionSelected(position: Int)
+   {
+      if(position < 0)
+         return
+
+      val itemType = getItemViewType(position)
+      val startOfSection = position + 1
+      val endOfSection = itemTypeList.indexOf(
+         when(itemType)
+         {
+            SummarySection -> SummaryEnd
+            NoteSection -> NoteEnd
+            ChapterSection -> ChapterEnd
+            else -> End
+         }
+      )
+      if(startOfSection == endOfSection)
+      {
+         val items : List<Int> =
+               when(itemType)
+               {
+                  SummarySection -> summary
+                  NoteSection -> notes
+                  ChapterSection -> chapters
+                  else -> listOf()
+               }
+
+         itemTypeList.addAll(startOfSection, items)
+         notifyItemRangeInserted(startOfSection, items.size)
+      }
+      else
+      {
+         for(index in (startOfSection until endOfSection).reversed())
+         {
+            itemTypeList.removeAt(index)
+         }
+         notifyItemRangeRemoved(startOfSection, endOfSection - startOfSection)
+      }
+   }
+
    private fun onNoteHeaderSelected(position: Int)
    {
+      if(position < 0)
+         return
+
       val itemOneBelowPos = position + 1
       when (getItemViewType(itemOneBelowPos))
       {
@@ -113,13 +161,16 @@ class NoteViewAdapter(
 
       private const val SummarySection = 1
       private const val SummaryHeader = 2
+      private const val SummaryEnd = 10
 
       private const val NoteSection = 10
       private const val NoteHeader = 11
       private const val NoteOptions = 12
+      private const val NoteEnd = 20
 
       private const val ChapterSection = 20
       private const val ChapterHeader = 21
+      private const val ChapterEnd = 100
 
       private const val End = 100
    }

@@ -5,8 +5,9 @@ import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.SectionHeaderBinding
 
 class ChapterSectionViewHolder(
-   itemView: View
-) : SectionHeaderViewHolder(itemView)
+   itemView: View,
+   onArrowSelected: (position: Int) -> Unit
+) : SectionHeaderViewHolder(itemView, onArrowSelected)
 {
    private val binding = SectionHeaderBinding.bind(itemView)
 

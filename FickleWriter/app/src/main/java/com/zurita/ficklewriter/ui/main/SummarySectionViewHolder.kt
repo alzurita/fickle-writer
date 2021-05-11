@@ -7,8 +7,9 @@ import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.SectionHeaderBinding
 
 class SummarySectionViewHolder(
-   itemView: View
-) : RecyclerView.ViewHolder(itemView)
+   itemView: View,
+   onArrowSelected: (position: Int) -> Unit
+) : SectionHeaderViewHolder(itemView, onArrowSelected)
 {
    private val binding = SectionHeaderBinding.bind(itemView)
 

@@ -8,6 +8,16 @@
    android:layout_marginBottom="@dimen/gutter"
    >
 
+   <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/arrow"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/gutter_small"
+      android:src="@drawable/ic_arrow_down"
+      android:clickable="true"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      />
+
    <!--
       Setting the title weight to a value of 1
       doesn't mean it takes up 100% of the area.
