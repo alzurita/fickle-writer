@@ -11,6 +11,8 @@
    android:layout_marginTop="@dimen/gutter"
    >
 
-   <include layout="@layout/note_header" />
+   <include
+      android:id="@+id/note_header"
+      layout="@layout/note_header" />
 
 </androidx.cardview.widget.CardView>

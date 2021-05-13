@@ -28,6 +28,7 @@
          android:text="@string/pin"
          android:gravity="bottom|center_horizontal"
          android:background="@drawable/bg_image_text_button"
+         android:backgroundTint="?attr/colorPrimaryVariant"
          android:layout_weight="1"
          />
 
@@ -36,7 +37,8 @@
          android:layout_height="wrap_content"
          android:text="@string/edit"
          android:gravity="bottom|center_horizontal"
-         android:background="@drawable/bg_image_text_button"
+         android:background="@drawable/bg_edit"
+         android:backgroundTint="?attr/colorPrimaryVariant"
          android:layout_weight="1"
          />
 

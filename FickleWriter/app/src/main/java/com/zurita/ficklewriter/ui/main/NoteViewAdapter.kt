@@ -59,7 +59,7 @@ class NoteViewAdapter(
          }
          ChapterHeader ->
          {
-            val view = inflater.inflate(R.layout.chapter_overview, parent, false)
+            val view = inflater.inflate(R.layout.note, parent, false)
             ChapterViewHolder(view)
          }
          else ->

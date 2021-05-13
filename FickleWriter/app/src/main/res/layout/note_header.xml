@@ -51,7 +51,7 @@
       android:paddingHorizontal="@dimen/gutter"
       android:paddingBottom="@dimen/gutter_small"
       android:text="@string/example_short_description"
-      app:layout_constraintEnd_toStartOf="@id/favorite"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="@id/title"
       app:layout_constraintTop_toBottomOf="@id/title"
       />
