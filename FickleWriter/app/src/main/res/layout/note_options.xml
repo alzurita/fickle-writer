@@ -23,6 +23,7 @@
       >
 
       <androidx.appcompat.widget.AppCompatButton
+         android:id="@+id/pin"
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:text="@string/pin"
@@ -33,6 +34,7 @@
          />
 
       <androidx.appcompat.widget.AppCompatButton
+         android:id="@+id/edit"
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:text="@string/edit"

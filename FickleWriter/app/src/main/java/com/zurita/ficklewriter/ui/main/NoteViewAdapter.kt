@@ -1,24 +1,41 @@
 package com.zurita.ficklewriter.ui.main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
 
 class NoteViewAdapter(
-   private val inflater: LayoutInflater
+   private val inflater: LayoutInflater,
+   private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
+   /** Each type of item is listed in order based on its section */
    private val itemTypeList = mutableListOf(
-      SummarySection,  SummaryHeader, NoteSection, NoteHeader, NoteHeader, NoteHeader,
-      ChapterSection, ChapterHeader, ChapterHeader, End
+      SummarySection, SummaryHeader, NoteSection, ChapterSection, End
    )
 
-   // Dummy items because I don't have objects for these
+   /** There is only one summary item, but it is still a list */
    private val summary = listOf(SummaryHeader)
-   private val notes = mutableListOf(NoteHeader, NoteHeader, NoteHeader)
+
+   /** Collection of notes */
+   private val notes = mutableListOf(Note("Note 1"), Note("Note 2"), Note("Note 3"))
+
+   /** Collection of chapters */
    private val chapters = mutableListOf(ChapterHeader, ChapterHeader, ChapterHeader, ChapterHeader)
+
+   init
+   {
+      // Populate the list with a set of enums for notes and chapters
+      with(itemTypeList) {
+         addAll(indexOf(NoteEnd), List(notes.size) { NoteHeader })
+         addAll(indexOf(ChapterEnd), List(chapters.size) { ChapterHeader })
+      }
+   }
 
    override fun onCreateViewHolder(
       parent: ViewGroup,
@@ -50,7 +67,7 @@ class NoteViewAdapter(
          NoteOptions ->
          {
             val view = inflater.inflate(R.layout.note_options, parent, false)
-            NoteOptionsViewHolder(view)
+            NoteOptionsViewHolder(view) { note -> onPinSelected(note) }
          }
          ChapterSection ->
          {
@@ -67,6 +84,25 @@ class NoteViewAdapter(
             val view = View(parent.context)
             EndViewHolder(view)
          }
+      }
+   }
+
+   private fun onPinSelected(note: Note)
+   {
+      val notification1 = NotificationCompat.Builder(context, "CHANNEL ID")
+            .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle(note.title)
+            .setContentText("yadda yadda yadda").setPriority(NotificationCompat.PRIORITY_LOW)
+            .setGroup("GROUP ID").build()
+
+      val notificationSummary = NotificationCompat.Builder(context, "CHANNEL ID")
+            .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle("Notes")
+            .setContentText("yadda yadda yadda").setPriority(NotificationCompat.PRIORITY_LOW)
+            .setGroup("GROUP ID").setGroupSummary(true).build()
+
+      with(NotificationManagerCompat.from(context)) {
+         // notificationId is a unique int for each notification that you must define
+         notify(1, notification1)
+         notify(0, notificationSummary)
       }
    }
 
@@ -90,13 +126,12 @@ class NoteViewAdapter(
 
    private fun onSectionSelected(position: Int)
    {
-      if(position < 0)
-         return
+      if (position < 0) return
 
       val itemType = getItemViewType(position)
       val startOfSection = position + 1
       val endOfSection = itemTypeList.indexOf(
-         when(itemType)
+         when (itemType)
          {
             SummarySection -> SummaryEnd
             NoteSection -> NoteEnd
@@ -104,23 +139,22 @@ class NoteViewAdapter(
             else -> End
          }
       )
-      if(startOfSection == endOfSection)
+      if (startOfSection == endOfSection)
       {
-         val items : List<Int> =
-               when(itemType)
-               {
-                  SummarySection -> summary
-                  NoteSection -> notes
-                  ChapterSection -> chapters
-                  else -> listOf()
-               }
+         val (itemCount, itemHeader) = when (itemType)
+         {
+            SummarySection -> Pair(1, SummaryHeader)
+            NoteSection -> Pair(notes.size, NoteHeader)
+            ChapterSection -> Pair(chapters.size, ChapterHeader)
+            else -> Pair(0, End)
+         }
 
-         itemTypeList.addAll(startOfSection, items)
-         notifyItemRangeInserted(startOfSection, items.size)
+         itemTypeList.addAll(startOfSection, List(itemCount) { itemHeader })
+         notifyItemRangeInserted(startOfSection, itemCount)
       }
       else
       {
-         for(index in (startOfSection until endOfSection).reversed())
+         for (index in (startOfSection until endOfSection).reversed())
          {
             itemTypeList.removeAt(index)
          }
@@ -130,8 +164,7 @@ class NoteViewAdapter(
 
    private fun onNoteHeaderSelected(position: Int)
    {
-      if(position < 0)
-         return
+      if (position < 0) return
 
       val itemOneBelowPos = position + 1
       when (getItemViewType(itemOneBelowPos))

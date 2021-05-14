@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +48,7 @@ class EditorFragment : Fragment()
 
       val model by activityViewModels<EditorViewModel>()
 
-      binding.mainPanel?.notesList?.adapter = NoteViewAdapter(layoutInflater)
+      binding.mainPanel?.notesList?.adapter = NoteViewAdapter(layoutInflater, context!!)
       binding.mainPanel?.notesList?.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
    }

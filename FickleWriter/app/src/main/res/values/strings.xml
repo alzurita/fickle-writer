@@ -10,4 +10,6 @@
    <string name="summary">Summary</string>
    <string name="notes">Notes</string>
    <string name="chapters">Chapters</string>
+   <string name="notification_channel_name">FickleWriter notification</string>
+   <string name="notification_channel_description">Notification description</string>
 </resources>
