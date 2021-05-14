@@ -14,13 +14,19 @@ class NoteViewAdapter(
    private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
+   data class AdapterItem(
+      val type: Int,
+      val data: Any? = null
+   )
+
    /** Each type of item is listed in order based on its section */
    private val itemTypeList = mutableListOf(
-      SummarySection, SummaryHeader, NoteSection, ChapterSection, End
+      AdapterItem(SummarySection), AdapterItem(NoteSection), AdapterItem(ChapterSection),
+      AdapterItem(End)
    )
 
    /** There is only one summary item, but it is still a list */
-   private val summary = listOf(SummaryHeader)
+   private val summaryHeader = AdapterItem(SummaryHeader)
 
    /** Collection of notes */
    private val notes = mutableListOf(Note("Note 1"), Note("Note 2"), Note("Note 3"))
@@ -32,8 +38,9 @@ class NoteViewAdapter(
    {
       // Populate the list with a set of enums for notes and chapters
       with(itemTypeList) {
-         addAll(indexOf(NoteEnd), List(notes.size) { NoteHeader })
-         addAll(indexOf(ChapterEnd), List(chapters.size) { ChapterHeader })
+         add(indexOfType(SummaryEnd), summaryHeader)
+         addAll(indexOfType(NoteEnd), List(notes.size) { AdapterItem(NoteHeader, Note()) })
+         addAll(indexOfType(ChapterEnd), List(chapters.size) { AdapterItem(ChapterHeader) })
       }
    }
 
@@ -121,7 +128,7 @@ class NoteViewAdapter(
 
    override fun getItemViewType(position: Int): Int
    {
-      return if (position < 0 || position >= itemCount) Start else itemTypeList[position]
+      return if (position < 0 || position >= itemCount) Start else itemTypeList[position].type
    }
 
    private fun onSectionSelected(position: Int)
@@ -129,28 +136,15 @@ class NoteViewAdapter(
       if (position < 0) return
 
       val itemType = getItemViewType(position)
+      val itemEndType = getItemEndType(itemType)
+
       val startOfSection = position + 1
-      val endOfSection = itemTypeList.indexOf(
-         when (itemType)
-         {
-            SummarySection -> SummaryEnd
-            NoteSection -> NoteEnd
-            ChapterSection -> ChapterEnd
-            else -> End
-         }
-      )
+      val endOfSection = itemTypeList.indexOfType(itemEndType)
       if (startOfSection == endOfSection)
       {
-         val (itemCount, itemHeader) = when (itemType)
-         {
-            SummarySection -> Pair(1, SummaryHeader)
-            NoteSection -> Pair(notes.size, NoteHeader)
-            ChapterSection -> Pair(chapters.size, ChapterHeader)
-            else -> Pair(0, End)
-         }
-
-         itemTypeList.addAll(startOfSection, List(itemCount) { itemHeader })
-         notifyItemRangeInserted(startOfSection, itemCount)
+         val adapterList = getAdapterList(itemType)
+         itemTypeList.addAll(startOfSection, adapterList)
+         notifyItemRangeInserted(startOfSection, adapterList.size)
       }
       else
       {
@@ -162,8 +156,32 @@ class NoteViewAdapter(
       }
    }
 
+   private fun getAdapterList(itemType: Int): List<AdapterItem>
+   {
+      return (when (itemType)
+      {
+         SummarySection -> listOf(summaryHeader)
+         NoteSection -> List(notes.size) { AdapterItem(NoteHeader, Note()) }
+         ChapterSection -> List(chapters.size) { AdapterItem(ChapterHeader, null) }
+         else -> listOf()
+      })
+   }
+
+   private fun getItemEndType(itemType: Int): Int
+   {
+      return (when (itemType)
+      {
+         SummarySection -> SummaryEnd
+         NoteSection -> NoteEnd
+         ChapterSection -> ChapterEnd
+         else -> End
+      })
+   }
+
    private fun onNoteHeaderSelected(position: Int)
    {
+      // If you click really fast, you can get a (-1) index on
+      // occasion since it's an invalid index
       if (position < 0) return
 
       val itemOneBelowPos = position + 1
@@ -182,7 +200,7 @@ class NoteViewAdapter(
             // item, or we are at the end of the list,
             // we want to 'expand' the item by adding
             // an options menu
-            itemTypeList.add(itemOneBelowPos, NoteOptions)
+            itemTypeList.add(itemOneBelowPos, AdapterItem(NoteOptions, itemTypeList[position].data))
             notifyItemInserted(itemOneBelowPos)
          }
       }
@@ -207,4 +225,9 @@ class NoteViewAdapter(
 
       private const val End = 100
    }
+}
+
+private fun List<NoteViewAdapter.AdapterItem>.indexOfType(itemEndType: Int): Int
+{
+   return indexOf(find { adapterItem -> adapterItem.type == itemEndType })
 }
