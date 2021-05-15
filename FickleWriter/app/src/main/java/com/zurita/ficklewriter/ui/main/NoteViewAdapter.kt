@@ -1,12 +1,26 @@
 package com.zurita.ficklewriter.ui.main
 
+import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.graphics.drawable.Icon
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.Person
+import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.zurita.ficklewriter.MainActivity
 import com.zurita.ficklewriter.R
 
 class NoteViewAdapter(
@@ -121,16 +135,62 @@ class NoteViewAdapter(
       position: Int
    )
    {
-      val notification = NotificationCompat.Builder(context, pinsChannel)
-            .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle(note.title)
-            .setContentText(note.shortDescription).setPriority(NotificationCompat.PRIORITY_LOW)
-            .setGroup(pinsGroup).build()
+      // Create bubble intent
+      val target = Intent(context, MainActivity::class.java)
+      val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0)
+
+      // Create bubble metadata
+      val bubbleData = NotificationCompat.BubbleMetadata.Builder().setIcon(
+         IconCompat.createWithResource(context, R.drawable.ic_tea_cup_image))
+            .setDesiredHeight(600).setIntent(bubbleIntent).build()
+
+      // Fake person
+      val chatPartner = Person.Builder()
+            .setName("Chat partner")
+            .setImportant(true)
+            .setIcon(
+               IconCompat.createWithResource(context, R.drawable.ic_tea_cup_image))
+            .build()
+
+      target.action = "ACTION_VIEW"
+      // Shortcut
+      val shortcutId = "Shorty"
+      val shortcut = ShortcutInfoCompat.Builder(context,shortcutId)
+            .setActivity(ComponentName(context, MainActivity::class.java))
+            .setLongLived(true)
+            .setPerson(chatPartner)
+            .setShortLabel("Hello World")
+            .setIntent(target)
+            .build()
+
+      val list = java.util.ArrayList<ShortcutInfoCompat>().also { it.add(shortcut) }
+      ShortcutManagerCompat.addDynamicShortcuts(context, list)
+
+      // Create notification
+      val builder = NotificationCompat.Builder(context, pinsChannel)
+            .setContentIntent(bubbleIntent)
+            .setSmallIcon(R.drawable.ic_tea_cup_image)
+            .setBubbleMetadata(bubbleData)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setShortcutId(shortcutId)
+            .setStyle(NotificationCompat.MessagingStyle(chatPartner))
+            .setContentText("Hello World")
+            .setShowWhen(true)
 
       with(NotificationManagerCompat.from(context)) {
-         // notificationId is a unique int for each notification that you must define
-         notify(getNoteIndex(NoteOptions, position), notification)
-         notify(-1, notificationSummary)
+         notify(10, builder.build())
       }
+
+//      val notification = NotificationCompat.Builder(context, pinsChannel)
+//            .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle(note.title)
+//            .setContentText(note.shortDescription).setPriority(NotificationCompat.PRIORITY_LOW)
+//            .setGroup(pinsGroup).build()
+//
+//      with(NotificationManagerCompat.from(context)) {
+//         // notificationId is a unique int for each notification that you must define
+//         notify(getNoteIndex(NoteOptions, position), notification)
+//         notify(-1, notificationSummary)
+//      } // end with
    }
 
    override fun onBindViewHolder(
