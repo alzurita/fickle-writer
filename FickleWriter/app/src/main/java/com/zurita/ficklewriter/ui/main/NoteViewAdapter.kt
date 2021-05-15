@@ -14,6 +14,12 @@ class NoteViewAdapter(
    private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
+   /**
+    * Each AdapterItem has a type to mark what kind of
+    * data is located at a given index of the list. Certain
+    * types of items have actual data associated with them.
+    * Others that do not have data are used to mark sections.
+    */
    data class AdapterItem(
       val type: Int,
       val data: Any? = null
@@ -29,10 +35,26 @@ class NoteViewAdapter(
    private val summaryHeader = AdapterItem(SummaryHeader)
 
    /** Collection of notes */
-   private val notes = mutableListOf(Note("Note 1"), Note("Note 2"), Note("Note 3"))
+   private val notes = mutableListOf(
+      Note("Note 1", "A short description of the first note."),
+      Note("Note 2", "Some different description of the second note."),
+      Note("Note 3", "And a third for the third.")
+   )
 
    /** Collection of chapters */
    private val chapters = mutableListOf(ChapterHeader, ChapterHeader, ChapterHeader, ChapterHeader)
+
+   /** Pins channel, must be previously registered */
+   private val pinsChannel = context.resources.getString(R.string.pins_channel)
+
+   /** Pins group, all notifications will get added into one group */
+   private val pinsGroup = context.resources.getString(R.string.pins_group)
+
+   private val notificationSummary =
+         NotificationCompat.Builder(context, pinsChannel).setSmallIcon(R.drawable.ic_tea_cup_image)
+               .setContentTitle(context.resources.getString(R.string.notes))
+               .setPriority(NotificationCompat.PRIORITY_LOW).setGroup(pinsGroup)
+               .setGroupSummary(true).build()
 
    init
    {
@@ -74,7 +96,7 @@ class NoteViewAdapter(
          NoteOptions ->
          {
             val view = inflater.inflate(R.layout.note_options, parent, false)
-            NoteOptionsViewHolder(view) { note -> onPinSelected(note) }
+            NoteOptionsViewHolder(view) { note, position -> onPinSelected(note, position) }
          }
          ChapterSection ->
          {
@@ -94,22 +116,20 @@ class NoteViewAdapter(
       }
    }
 
-   private fun onPinSelected(note: Note)
+   private fun onPinSelected(
+      note: Note,
+      position: Int
+   )
    {
-      val notification1 = NotificationCompat.Builder(context, "CHANNEL ID")
+      val notification = NotificationCompat.Builder(context, pinsChannel)
             .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle(note.title)
-            .setContentText("yadda yadda yadda").setPriority(NotificationCompat.PRIORITY_LOW)
-            .setGroup("GROUP ID").build()
-
-      val notificationSummary = NotificationCompat.Builder(context, "CHANNEL ID")
-            .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle("Notes")
-            .setContentText("yadda yadda yadda").setPriority(NotificationCompat.PRIORITY_LOW)
-            .setGroup("GROUP ID").setGroupSummary(true).build()
+            .setContentText(note.shortDescription).setPriority(NotificationCompat.PRIORITY_LOW)
+            .setGroup(pinsGroup).build()
 
       with(NotificationManagerCompat.from(context)) {
          // notificationId is a unique int for each notification that you must define
-         notify(1, notification1)
-         notify(0, notificationSummary)
+         notify(getNoteIndex(NoteOptions, position), notification)
+         notify(-1, notificationSummary)
       }
    }
 
@@ -118,7 +138,25 @@ class NoteViewAdapter(
       position: Int
    )
    {
+      when (val itemType = itemTypeList[position].type)
+      {
+         NoteHeader, NoteOptions ->
+         {
+            val noteIndex = getNoteIndex(itemType, position)
 
+            val noteToBind = notes[noteIndex]
+            (holder as NoteViewHolderIntf).bind(noteToBind)
+         }
+      }
+   }
+
+   private fun getNoteIndex(
+      itemType: Int,
+      position: Int
+   ): Int
+   {
+      return itemTypeList.subList(itemTypeList.indexOfType(NoteSection), position)
+                   .count { adapterItem -> adapterItem.type == NoteHeader } - if (itemType == NoteOptions) 1 else 0
    }
 
    override fun getItemCount(): Int
