@@ -14,7 +14,6 @@ import com.zurita.ficklewriter.databinding.EditorFragmentBinding
 
 class EditorFragment : Fragment()
 {
-
    companion object
    {
       fun newInstance() = EditorFragment()

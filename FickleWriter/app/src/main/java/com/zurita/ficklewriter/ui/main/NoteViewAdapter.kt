@@ -50,9 +50,9 @@ class NoteViewAdapter(
 
    /** Collection of notes */
    private val notes = mutableListOf(
-      Note("Note 1", "A short description of the first note."),
-      Note("Note 2", "Some different description of the second note."),
-      Note("Note 3", "And a third for the third.")
+      Note("Note 1", "A short description of the first note.", 1),
+      Note("Note 2", "Some different description of the second note.", 2),
+      Note("Note 3", "And a third for the third.", 3)
    )
 
    /** Collection of chapters */
@@ -61,14 +61,25 @@ class NoteViewAdapter(
    /** Pins channel, must be previously registered */
    private val pinsChannel = context.resources.getString(R.string.pins_channel)
 
-   /** Pins group, all notifications will get added into one group */
+   /** Pins shortcut */
+   private val pinsShortcut = context.resources.getString(R.string.pins_shortcut)
+
+   /** Pins group, all notifications will get added into one group. This way
+    * they won't show as separate notifications, but in an expandable group. */
    private val pinsGroup = context.resources.getString(R.string.pins_group)
 
+   /** Group that all note bubbles/notifications are a part of */
    private val notificationSummary =
-         NotificationCompat.Builder(context, pinsChannel).setSmallIcon(R.drawable.ic_tea_cup_image)
+         NotificationCompat.Builder(context, pinsChannel)
+               .setSmallIcon(R.drawable.ic_tea_cup_image)
                .setContentTitle(context.resources.getString(R.string.notes))
-               .setPriority(NotificationCompat.PRIORITY_LOW).setGroup(pinsGroup)
-               .setGroupSummary(true).build()
+               .setPriority(NotificationCompat.PRIORITY_LOW)
+               .setGroup(pinsGroup)
+               .setGroupSummary(true)
+               .build()
+
+   /** Load the icon that goes inside the notification bubble */
+   private val bubbleIcon = IconCompat.createWithResource(context, R.drawable.ic_tea_cup_image)
 
    init
    {
@@ -80,6 +91,29 @@ class NoteViewAdapter(
       }
    }
 
+   /**
+    * Get the total number of items in this list
+    */
+   override fun getItemCount(): Int
+   {
+      return itemTypeList.size
+   }
+
+   /**
+    * There are multiple types of items: there is a start to each section, then a type
+    * for that section (i.e. summary/chapter/note). Notes can be further expanded and therefore
+    * there are two types of notes: header and the options. There is one blank end type, and it
+    * is used because without it the open/close animation of the last section looks clunky.
+    */
+   override fun getItemViewType(position: Int): Int
+   {
+      return if (position < 0 || position >= itemCount) Start else itemTypeList[position].type
+   }
+
+   /**
+    * Create a ViewHolder based on the type given. Types are defined in this class's
+    * companion object at the bottom of the file.
+    */
    override fun onCreateViewHolder(
       parent: ViewGroup,
       viewType: Int
@@ -130,69 +164,10 @@ class NoteViewAdapter(
       }
    }
 
-   private fun onPinSelected(
-      note: Note,
-      position: Int
-   )
-   {
-      // Create bubble intent
-      val target = Intent(context, MainActivity::class.java)
-      val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0)
-
-      // Create bubble metadata
-      val bubbleData = NotificationCompat.BubbleMetadata.Builder().setIcon(
-         IconCompat.createWithResource(context, R.drawable.ic_tea_cup_image))
-            .setDesiredHeight(600).setIntent(bubbleIntent).build()
-
-      // Fake person
-      val chatPartner = Person.Builder()
-            .setName("Chat partner")
-            .setImportant(true)
-            .setIcon(
-               IconCompat.createWithResource(context, R.drawable.ic_tea_cup_image))
-            .build()
-
-      target.action = "ACTION_VIEW"
-      // Shortcut
-      val shortcutId = "Shorty"
-      val shortcut = ShortcutInfoCompat.Builder(context,shortcutId)
-            .setActivity(ComponentName(context, MainActivity::class.java))
-            .setLongLived(true)
-            .setPerson(chatPartner)
-            .setShortLabel("Hello World")
-            .setIntent(target)
-            .build()
-
-      val list = java.util.ArrayList<ShortcutInfoCompat>().also { it.add(shortcut) }
-      ShortcutManagerCompat.addDynamicShortcuts(context, list)
-
-      // Create notification
-      val builder = NotificationCompat.Builder(context, pinsChannel)
-            .setContentIntent(bubbleIntent)
-            .setSmallIcon(R.drawable.ic_tea_cup_image)
-            .setBubbleMetadata(bubbleData)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setShortcutId(shortcutId)
-            .setStyle(NotificationCompat.MessagingStyle(chatPartner))
-            .setContentText("Hello World")
-            .setShowWhen(true)
-
-      with(NotificationManagerCompat.from(context)) {
-         notify(10, builder.build())
-      }
-
-//      val notification = NotificationCompat.Builder(context, pinsChannel)
-//            .setSmallIcon(R.drawable.ic_tea_cup_image).setContentTitle(note.title)
-//            .setContentText(note.shortDescription).setPriority(NotificationCompat.PRIORITY_LOW)
-//            .setGroup(pinsGroup).build()
-//
-//      with(NotificationManagerCompat.from(context)) {
-//         // notificationId is a unique int for each notification that you must define
-//         notify(getNoteIndex(NoteOptions, position), notification)
-//         notify(-1, notificationSummary)
-//      } // end with
-   }
-
+   /**
+    * After a ViewHolder has been instantiated, or when one is being reused, it needs
+    * to be bound to a set of data. That data corresponds to the position given.
+    */
    override fun onBindViewHolder(
       holder: RecyclerView.ViewHolder,
       position: Int
@@ -208,25 +183,6 @@ class NoteViewAdapter(
             (holder as NoteViewHolderIntf).bind(noteToBind)
          }
       }
-   }
-
-   private fun getNoteIndex(
-      itemType: Int,
-      position: Int
-   ): Int
-   {
-      return itemTypeList.subList(itemTypeList.indexOfType(NoteSection), position)
-                   .count { adapterItem -> adapterItem.type == NoteHeader } - if (itemType == NoteOptions) 1 else 0
-   }
-
-   override fun getItemCount(): Int
-   {
-      return itemTypeList.size
-   }
-
-   override fun getItemViewType(position: Int): Int
-   {
-      return if (position < 0 || position >= itemCount) Start else itemTypeList[position].type
    }
 
    private fun onSectionSelected(position: Int)
@@ -252,28 +208,6 @@ class NoteViewAdapter(
          }
          notifyItemRangeRemoved(startOfSection, endOfSection - startOfSection)
       }
-   }
-
-   private fun getAdapterList(itemType: Int): List<AdapterItem>
-   {
-      return (when (itemType)
-      {
-         SummarySection -> listOf(summaryHeader)
-         NoteSection -> List(notes.size) { AdapterItem(NoteHeader, Note()) }
-         ChapterSection -> List(chapters.size) { AdapterItem(ChapterHeader, null) }
-         else -> listOf()
-      })
-   }
-
-   private fun getItemEndType(itemType: Int): Int
-   {
-      return (when (itemType)
-      {
-         SummarySection -> SummaryEnd
-         NoteSection -> NoteEnd
-         ChapterSection -> ChapterEnd
-         else -> End
-      })
    }
 
    private fun onNoteHeaderSelected(position: Int)
@@ -302,6 +236,95 @@ class NoteViewAdapter(
             notifyItemInserted(itemOneBelowPos)
          }
       }
+   }
+
+   private fun onPinSelected(
+      note: Note,
+      position: Int
+   )
+   {
+      // Create bubble intent
+      val target = createPinIntent()
+      val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0)
+
+      // Create bubble metadata
+      val bubbleData = NotificationCompat.BubbleMetadata.Builder()
+            .setIcon(bubbleIcon)
+            .setIntent(bubbleIntent)
+            .setDesiredHeightResId(R.dimen.expanded_bubble_height)
+            .build()
+
+      // Create a shortcut
+      val shortcut = ShortcutInfoCompat.Builder(context, pinsShortcut)
+            .setActivity(ComponentName(context, MainActivity::class.java))
+            .setLongLived(true)
+            .setShortLabel(note.title)
+            .setIntent(target)
+            .build()
+
+      // Add the shortcut to the shortcut manager, sort of a way to register it with the system
+      val list = java.util.ArrayList<ShortcutInfoCompat>()
+            .also { it.add(shortcut) }
+
+      // Fake person
+      val chatPartner = Person.Builder()
+            .setName("Must be defined as well")
+            .build()
+
+      // Create notification
+      val builder = NotificationCompat.Builder(context, pinsChannel)
+            .setContentIntent(bubbleIntent)
+            .setSmallIcon(R.drawable.ic_tea_cup_image)
+            .setBubbleMetadata(bubbleData)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setShortcutId(pinsShortcut)
+            .setStyle(NotificationCompat.MessagingStyle(chatPartner))
+            .setContentTitle(note.title)
+            .setContentText(note.shortDescription)
+            .setShowWhen(true)
+
+      with(NotificationManagerCompat.from(context)) {
+         notify(note.id, builder.build())
+      }
+   }
+
+   private fun createPinIntent(): Intent
+   {
+      // Set the class to make this Intent explicit
+      val target = Intent(context, MainActivity::class.java)
+      target.action = CustomIntent.VIEW_PINNED_NOTE
+      return target
+   }
+
+   private fun getNoteIndex(
+      itemType: Int,
+      position: Int
+   ): Int
+   {
+      return itemTypeList.subList(itemTypeList.indexOfType(NoteSection), position)
+                   .count { adapterItem -> adapterItem.type == NoteHeader } - if (itemType == NoteOptions) 1 else 0
+   }
+
+   private fun getAdapterList(itemType: Int): List<AdapterItem>
+   {
+      return (when (itemType)
+      {
+         SummarySection -> listOf(summaryHeader)
+         NoteSection -> List(notes.size) { AdapterItem(NoteHeader, Note()) }
+         ChapterSection -> List(chapters.size) { AdapterItem(ChapterHeader, null) }
+         else -> listOf()
+      })
+   }
+
+   private fun getItemEndType(itemType: Int): Int
+   {
+      return (when (itemType)
+      {
+         SummarySection -> SummaryEnd
+         NoteSection -> NoteEnd
+         ChapterSection -> ChapterEnd
+         else -> End
+      })
    }
 
    companion object

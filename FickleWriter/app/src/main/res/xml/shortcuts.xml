@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   >
+
+   <capability
+      android:name="custom.intent.category.DEFAULT"
+      >
+      <intent
+         android:action="custom.intent.action.VIEW_PINNED_NOTE"
+         android:targetPackage="com.zurita.ficklewriter"
+         android:targetClass="com.zurita.ficklewriter.MainActivity"
+         >
+         <parameter
+            android:name="test"
+            android:key="test"
+            android:mimeType="https://schema.org/Text"
+            />
+      </intent>
+   </capability>
+
+</shortcuts>
