@@ -22,13 +22,25 @@ class NoteFragment : Fragment()
     */
    private val binding get() = _binding!!
 
+   private var title = "Empty"
+
    override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
       savedInstanceState: Bundle?
    ): View
    {
+      title = activity?.intent?.getStringExtra("com.zurita.ficklewriter.NoteTitle") ?: "Still empty"
       _binding = NoteFragmentBinding.inflate(inflater, container, false)
       return binding.root
+   }
+
+   override fun onViewCreated(
+      view: View,
+      savedInstanceState: Bundle?
+   )
+   {
+      super.onViewCreated(view, savedInstanceState)
+      binding.textView.text = title
    }
 }
