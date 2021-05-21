@@ -1,31 +1,16 @@
 package com.zurita.ficklewriter.ui.main
 
-import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.pm.ShortcutInfo
-import android.graphics.drawable.Icon
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.Person
-import androidx.core.content.ContextCompat
-import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.content.pm.PackageInfoCompat
-import androidx.core.content.pm.ShortcutInfoCompat
-import androidx.core.graphics.drawable.IconCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.zurita.ficklewriter.MainActivity
 import com.zurita.ficklewriter.R
 
 class NoteViewAdapter(
    private val inflater: LayoutInflater,
-   private val context: Context
+   private val context: Context,
+   private val callback: NoteViewAdapterListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
    /**
@@ -57,29 +42,6 @@ class NoteViewAdapter(
 
    /** Collection of chapters */
    private val chapters = mutableListOf(ChapterHeader, ChapterHeader, ChapterHeader, ChapterHeader)
-
-   /** Pins channel, must be previously registered */
-   private val pinsChannel = context.resources.getString(R.string.pins_channel)
-
-   /** Pins shortcut */
-   private val pinsShortcut = context.resources.getString(R.string.pins_shortcut)
-
-   /** Pins group, all notifications will get added into one group. This way
-    * they won't show as separate notifications, but in an expandable group. */
-   private val pinsGroup = context.resources.getString(R.string.pins_group)
-
-   /** Group that all note bubbles/notifications are a part of */
-   private val notificationSummary =
-         NotificationCompat.Builder(context, pinsChannel)
-               .setSmallIcon(R.drawable.ic_tea_cup_image)
-               .setContentTitle(context.resources.getString(R.string.notes))
-               .setPriority(NotificationCompat.PRIORITY_LOW)
-               .setGroup(pinsGroup)
-               .setGroupSummary(true)
-               .build()
-
-   /** Load the icon that goes inside the notification bubble */
-   private val bubbleIcon = IconCompat.createWithResource(context, R.drawable.ic_tea_cup_image)
 
    init
    {
@@ -144,7 +106,7 @@ class NoteViewAdapter(
          NoteOptions ->
          {
             val view = inflater.inflate(R.layout.note_options, parent, false)
-            NoteOptionsViewHolder(view) { note, position -> onPinSelected(note, position) }
+            NoteOptionsViewHolder(view) { note -> onPinSelected(note) }
          }
          ChapterSection ->
          {
@@ -239,61 +201,10 @@ class NoteViewAdapter(
    }
 
    private fun onPinSelected(
-      note: Note,
-      position: Int
+      note: Note
    )
    {
-      // Create bubble intent
-      val target = createPinIntent()
-      val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0)
-
-      // Create bubble metadata
-      val bubbleData = NotificationCompat.BubbleMetadata.Builder()
-            .setIcon(bubbleIcon)
-            .setIntent(bubbleIntent)
-            .setDesiredHeightResId(R.dimen.expanded_bubble_height)
-            .build()
-
-      // Create a shortcut
-      val shortcut = ShortcutInfoCompat.Builder(context, pinsShortcut)
-            .setActivity(ComponentName(context, MainActivity::class.java))
-            .setLongLived(true)
-            .setShortLabel(note.title)
-            .setIntent(target)
-            .build()
-
-      // Add the shortcut to the shortcut manager, sort of a way to register it with the system
-      val list = java.util.ArrayList<ShortcutInfoCompat>()
-            .also { it.add(shortcut) }
-
-      // Fake person
-      val chatPartner = Person.Builder()
-            .setName("Must be defined as well")
-            .build()
-
-      // Create notification
-      val builder = NotificationCompat.Builder(context, pinsChannel)
-            .setContentIntent(bubbleIntent)
-            .setSmallIcon(R.drawable.ic_tea_cup_image)
-            .setBubbleMetadata(bubbleData)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setShortcutId(pinsShortcut)
-            .setStyle(NotificationCompat.MessagingStyle(chatPartner))
-            .setContentTitle(note.title)
-            .setContentText(note.shortDescription)
-            .setShowWhen(true)
-
-      with(NotificationManagerCompat.from(context)) {
-         notify(note.id, builder.build())
-      }
-   }
-
-   private fun createPinIntent(): Intent
-   {
-      // Set the class to make this Intent explicit
-      val target = Intent(context, MainActivity::class.java)
-      target.action = CustomIntent.VIEW_PINNED_NOTE
-      return target
+      callback.pinNote(note)
    }
 
    private fun getNoteIndex(
@@ -327,6 +238,11 @@ class NoteViewAdapter(
       })
    }
 
+   private fun List<AdapterItem>.indexOfType(itemEndType: Int): Int
+   {
+      return indexOf(find { adapterItem -> adapterItem.type == itemEndType })
+   }
+
    companion object
    {
       private const val Start = 0
@@ -346,9 +262,4 @@ class NoteViewAdapter(
 
       private const val End = 100
    }
-}
-
-private fun List<NoteViewAdapter.AdapterItem>.indexOfType(itemEndType: Int): Int
-{
-   return indexOf(find { adapterItem -> adapterItem.type == itemEndType })
 }
