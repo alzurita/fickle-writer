@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.main
+package com.zurita.ficklewriter.ui.editor
 
 import android.view.View
 import com.zurita.ficklewriter.R

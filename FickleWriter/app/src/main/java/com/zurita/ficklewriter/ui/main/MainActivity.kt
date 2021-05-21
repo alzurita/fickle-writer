@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter
+package com.zurita.ficklewriter.ui.main
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -6,9 +6,9 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.zurita.ficklewriter.ui.main.CustomIntent
-import com.zurita.ficklewriter.ui.main.EditorFragment
-import com.zurita.ficklewriter.ui.main.NoteFragment
+import com.zurita.ficklewriter.R
+import com.zurita.ficklewriter.ui.editor.EditorFragment
+import com.zurita.ficklewriter.ui.editor.NoteFragment
 
 class MainActivity : AppCompatActivity()
 {

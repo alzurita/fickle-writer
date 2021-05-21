@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.main
+package com.zurita.ficklewriter.ui.editor
 
 data class Note(
    var title: String = "",

@@ -1,10 +1,9 @@
-package com.zurita.ficklewriter.ui.main
+package com.zurita.ficklewriter.ui.editor
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.NoteBinding
-import com.zurita.ficklewriter.databinding.NoteHeaderBinding
 
 class ChapterViewHolder(
    itemView: View

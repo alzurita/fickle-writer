@@ -1,8 +1,7 @@
-package com.zurita.ficklewriter.ui.main
+package com.zurita.ficklewriter.ui.editor
 
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.SectionHeaderBinding
 
