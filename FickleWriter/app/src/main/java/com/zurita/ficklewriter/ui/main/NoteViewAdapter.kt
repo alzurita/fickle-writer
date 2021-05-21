@@ -204,7 +204,14 @@ class NoteViewAdapter(
       note: Note
    )
    {
-      callback.pinNote(note)
+      if(note.pinned)
+      {
+         callback.pinNote(note)
+      }
+      else
+      {
+         callback.unpinNote(note)
+      }
    }
 
    private fun getNoteIndex(

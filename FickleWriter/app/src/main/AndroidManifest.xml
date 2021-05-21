@@ -13,7 +13,7 @@
       <activity
          android:name=".MainActivity"
          android:allowEmbedded="true"
-         android:documentLaunchMode="always"
+         android:documentLaunchMode="intoExisting"
          android:resizeableActivity="true">
          <meta-data
             android:name="android.app.shortcuts"

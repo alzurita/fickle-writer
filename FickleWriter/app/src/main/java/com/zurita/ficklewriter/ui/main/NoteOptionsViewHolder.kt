@@ -16,11 +16,16 @@ class NoteOptionsViewHolder(
 
    init
    {
-      binding.pin.setOnClickListener { onPinSelected(note) }
+      binding.pin.setOnClickListener {
+         note.pinned = !note.pinned
+         binding.pin.text = if(note.pinned) "Unpin" else "Pin"
+         onPinSelected(note)
+      }
    }
 
    override fun bind(item: Note)
    {
       note = item
+      binding.pin.text = if(note.pinned) "Unpin" else "Pin"
    }
 }

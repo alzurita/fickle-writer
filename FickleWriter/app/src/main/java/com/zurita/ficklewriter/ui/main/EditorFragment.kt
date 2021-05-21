@@ -13,7 +13,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.EditorFragmentBinding
 
-class EditorFragment : Fragment()
+class EditorFragment
+   : Fragment(),
+     NoteViewAdapterListener
 {
    companion object
    {
@@ -27,6 +29,8 @@ class EditorFragment : Fragment()
     * onDestroyView.
     */
    private val binding get() = _binding!!
+
+   private val listOfPins = mutableListOf<FloatingActionButton>()
 
    override fun onCreateView(
       inflater: LayoutInflater,
@@ -54,21 +58,31 @@ class EditorFragment : Fragment()
    private fun setupAdapter()
    {
       binding.mainPanel?.notesList?.adapter =
-            NoteViewAdapter(layoutInflater, context!!, object : NoteViewAdapterListener
-            {
-               override fun pinNote(note: Note)
-               {
-                  val floatingNote = FloatingActionButton(context!!)
-                  binding.coordinatorLayout?.addView(floatingNote)
-                  val layoutParams = floatingNote.layoutParams as CoordinatorLayout.LayoutParams
-                  with(layoutParams)
-                  {
-                     anchorId = R.id.toolbar
-                     anchorGravity = Gravity.BOTTOM or Gravity.CENTER_VERTICAL
-                  }
-               }
-            })
+            NoteViewAdapter(layoutInflater, context!!, this)
+
       binding.mainPanel?.notesList?.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+   }
+
+   override fun pinNote(note: Note)
+   {
+      val pin = FloatingActionButton(context!!)
+      binding.coordinatorLayout?.addView(pin)
+      listOfPins.add(pin)
+      val layoutParams = pin.layoutParams as CoordinatorLayout.LayoutParams
+      with(layoutParams)
+      {
+         anchorId = R.id.toolbar
+         anchorGravity = Gravity.BOTTOM or Gravity.START
+      }
+   }
+
+   override fun unpinNote(note: Note)
+   {
+      if(listOfPins.isNotEmpty())
+      {
+         binding.coordinatorLayout?.removeView(listOfPins.first())
+         listOfPins.removeFirst()
+      }
    }
 }
