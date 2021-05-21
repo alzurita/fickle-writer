@@ -13,4 +13,5 @@
    <string name="notification_channel_name">FickleWriter notification</string>
    <string name="notification_channel_description">Notification description</string>
    <string name="pins_shortcut">Pins Shortcut</string>
+   <string name="unpin">Unpin</string>
 </resources>
