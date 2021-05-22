@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity()
       else if (savedInstanceState == null)
       {
          supportFragmentManager.beginTransaction()
-               .replace(R.id.container, EditorFragment.newInstance())
+               .replace(R.id.container, ChapterFragment.newInstance())
                .commitNow()
       }
 
