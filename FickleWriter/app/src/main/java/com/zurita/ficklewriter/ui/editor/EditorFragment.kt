@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.graphics.drawable.IconCompat
@@ -118,7 +117,7 @@ class EditorFragment
          listOfPins.first().visibility = VISIBLE
          for(pin in listOfPins.subList(1, listOfPins.size))
          {
-            pin.visibility = INVISIBLE
+            pin.visibility = GONE
          }
       }
    }
