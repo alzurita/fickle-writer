@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.appcompat.widget.LinearLayoutCompat
    xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
+   android:background="@color/rajah"
+   android:orientation="vertical"
    >
 
-   <androidx.appcompat.widget.LinearLayoutCompat
+   <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/app_bar"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
+      android:layout_height="wrap_content"
       >
 
-      <!-- Although the layout height equals the
-         parent, adding layout_weight to one will
-         make it simply fill the remaining space -->
-      <androidx.appcompat.widget.AppCompatEditText
-         android:id="@+id/text"
+      <androidx.appcompat.widget.Toolbar
+         android:id="@+id/toolbar"
          android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_weight="1"
+         android:layout_height="?attr/actionBarSize"
+         android:background="?colorPrimaryVariant"
+         app:layout_collapseMode="pin"
+         app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
          />
 
-   </androidx.appcompat.widget.LinearLayoutCompat>
+   </com.google.android.material.appbar.AppBarLayout>
 
-</androidx.cardview.widget.CardView>
+   <!-- Although the layout height equals the
+         parent, adding layout_weight to one will
+         make it simply fill the remaining space -->
+   <androidx.appcompat.widget.AppCompatEditText
+      android:id="@+id/text"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginHorizontal="@dimen/gutter"
+      android:layout_weight="1"
+      android:background="@color/white"
+      />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

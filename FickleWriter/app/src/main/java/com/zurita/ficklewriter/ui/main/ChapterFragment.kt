@@ -3,13 +3,16 @@ package com.zurita.ficklewriter.ui.main
 import android.graphics.Typeface.BOLD
 import android.graphics.Typeface.ITALIC
 import android.os.Bundle
-import android.text.TextWatcher
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.ChapterFragmentBinding
 import com.zurita.ficklewriter.ui.editor.format.AlignmentMarkdownFormatter
+import com.zurita.ficklewriter.ui.editor.format.MarkupFormatter
 import com.zurita.ficklewriter.ui.editor.format.TextReplaceFormatter
 import com.zurita.ficklewriter.ui.editor.format.TypefaceMarkdownFormatter
 
@@ -31,6 +34,17 @@ class ChapterFragment : Fragment()
    /** Chapter binding to interact with underlying View
     * Only valid between onCreateView and onDestroyView. */
    private val binding get() = _binding!!
+
+   /* Format the chapter text to either with or without markup */
+   private val markupFormatters = listOf(
+      MarkupFormatter("*", StyleSpan::class.java,
+                      { StyleSpan(BOLD) }, { span: StyleSpan -> span.style == BOLD }),
+      MarkupFormatter("_", StyleSpan::class.java,
+                      { StyleSpan(ITALIC) }, { span: StyleSpan -> span.style == ITALIC })
+   )
+
+   /** True when markup is visible on the editor */
+   private var markupTextIsVisible = false
 
    /** List of objects that format markup text as soon as it
     * is entered. It isn't sophisticated, instead trading off
@@ -63,9 +77,64 @@ class ChapterFragment : Fragment()
    {
       super.onViewCreated(view, savedInstanceState)
 
-      for(formatter in formatters)
+      setupToolbar()
+
+      registerTextWatchers()
+   }
+
+   private fun setupToolbar()
+   {
+      binding.toolbar.inflateMenu(R.menu.chapter_options)
+      binding.toolbar.setOnMenuItemClickListener { menuItem ->
+         var clickHandled = true
+
+         when (menuItem.itemId)
+         {
+            R.id.toggle_markup -> toggleMarkup(menuItem)
+            else -> clickHandled = false
+         }
+
+         clickHandled
+      }
+   }
+
+   private fun registerTextWatchers()
+   {
+      for (formatter in formatters)
       {
          binding.text.addTextChangedListener(formatter)
+      }
+   }
+
+   private fun unregisterTextWatchers()
+   {
+      for (formatter in formatters)
+      {
+         binding.text.removeTextChangedListener(formatter)
+      }
+   }
+
+   private fun toggleMarkup(menuItem: MenuItem)
+   {
+      unregisterTextWatchers()
+
+      markupTextIsVisible = !markupTextIsVisible
+      menuItem.setTitle(
+         if (markupTextIsVisible) R.string.hide_markup
+         else R.string.show_markup
+      )
+
+      if (markupTextIsVisible)
+      {
+         for (markupFormatter in markupFormatters)
+            markupFormatter.spansToMarkup(binding.text.text)
+      }
+      else
+      {
+         for (markupFormatter in markupFormatters)
+            markupFormatter.markupToSpans(binding.text.text)
+
+         registerTextWatchers()
       }
    }
 }

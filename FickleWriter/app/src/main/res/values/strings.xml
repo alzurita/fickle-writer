@@ -14,4 +14,6 @@
    <string name="notification_channel_description">Notification description</string>
    <string name="pins_shortcut">Pins Shortcut</string>
    <string name="unpin">Unpin</string>
+   <string name="show_markup">Show markup</string>
+   <string name="hide_markup">Hide markup</string>
 </resources>
