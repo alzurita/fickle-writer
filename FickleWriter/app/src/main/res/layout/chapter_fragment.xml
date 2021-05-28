@@ -35,6 +35,8 @@
       android:layout_marginHorizontal="@dimen/gutter"
       android:layout_weight="1"
       android:background="@color/white"
+      android:gravity="top"
+      android:padding="@dimen/gutter"
       />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -5,6 +5,13 @@
    >
 
    <item
+      android:id="@+id/take_snapshot"
+      android:title="@string/take_snapshot"
+      app:showAsAction="ifRoom"
+      android:icon="@drawable/ic_bookmark"
+      />
+
+   <item
       android:id="@+id/toggle_markup"
       android:title="@string/show_markup"
       app:showAsAction="never"
