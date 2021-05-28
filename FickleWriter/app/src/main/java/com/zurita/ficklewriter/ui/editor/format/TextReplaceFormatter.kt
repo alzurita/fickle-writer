@@ -8,7 +8,8 @@ import java.lang.Integer.max
 class TextReplaceFormatter(
    private val textBefore: CharSequence,
    private val textAfter: CharSequence
-) : TextWatcher
+) : TextWatcher,
+    MarkdownFormatter
 {
    private var formatRange: Range<Int>? = null
    private var lengthBefore = textBefore.length
@@ -53,6 +54,40 @@ class TextReplaceFormatter(
          formatRange = null
 
          s?.replace(it.lower, it.upper, textAfter)
+      }
+   }
+
+   override fun spansToMarkdown(editable: Editable?)
+   {
+      if (editable == null)
+         return
+
+      var searchStart = 0
+      while(true)
+      {
+         searchStart = editable.indexOf(textAfter as String, searchStart)
+         if(searchStart < 0) break
+
+         val searchEnd = searchStart + textAfter.length
+
+         editable.replace(searchStart, searchEnd, textBefore)
+      }
+   }
+
+   override fun markdownToSpans(editable: Editable?)
+   {
+      if(editable == null)
+         return
+
+      var searchStart = 0
+      while(true)
+      {
+         searchStart = editable.indexOf(textBefore as String, searchStart)
+         if(searchStart < 0) break
+
+         val searchEnd = searchStart + textBefore.length
+
+         editable.replace(searchStart, searchEnd, textAfter)
       }
    }
 }

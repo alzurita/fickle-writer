@@ -2,6 +2,7 @@ package com.zurita.ficklewriter.ui.editor.format
 
 import android.text.Editable
 import android.text.Spannable
+import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.TextWatcher
 import android.text.style.StyleSpan
 import android.util.Log
@@ -11,11 +12,14 @@ import java.lang.Integer.max
 class TypefaceMarkdownFormatter(
    private val specialChars: CharSequence,
    private val typeface: Int
-) : TextWatcher
+) : TextWatcher,
+    MarkdownFormatter
 {
    private var formatRange: Range<Int>? = null
    private val lengthSpecialChars = specialChars.length
    private val specialCharsStr = specialChars.toString()
+
+   private val spanType = StyleSpan::class.java
 
    override fun beforeTextChanged(
       s: CharSequence?,
@@ -66,7 +70,7 @@ class TypefaceMarkdownFormatter(
          if(it.lower != it.upper)
          {
             s?.setSpan(
-               StyleSpan(typeface), it.lower, it.upper,
+               createSpan(), it.lower, it.upper,
                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
          }
@@ -74,4 +78,61 @@ class TypefaceMarkdownFormatter(
          s?.replace(it.upper-1, it.upper-1 + lengthSpecialChars, "")
       }
    }
+
+   override fun spansToMarkdown(editable: Editable?)
+   {
+      if(editable == null) return
+
+      val spans = editable.getSpans(0, editable.length, spanType)
+      for(span in spans)
+      {
+         if(isCorrectType(span))
+         {
+            val start = editable.getSpanStart(span)
+            val end = editable.getSpanEnd(span)
+            editable.replace(end, end, specialChars)
+            editable.replace(start, start, specialChars)
+            editable.removeSpan(span)
+         }
+      }
+   }
+
+   override fun markdownToSpans(editable: Editable?)
+   {
+      if(editable == null) return
+
+      var searchStart = 0
+      while(true)
+      {
+         searchStart = editable.indexOf(specialCharsStr, searchStart)
+         if(searchStart < 0) break
+
+         val searchEnd = editable.indexOf(specialCharsStr, searchStart+1)
+         if(searchEnd < 0) break
+
+         editable.setSpan(
+            createSpan(),
+            searchStart,
+            searchEnd,
+            SPAN_EXCLUSIVE_EXCLUSIVE
+         )
+
+         editable.replace(searchEnd, searchEnd+specialChars.length, "")
+         editable.replace(searchStart, searchStart+specialChars.length, "")
+
+         searchStart = searchEnd+1
+      }
+   }
+
+   private fun isCorrectType(span: StyleSpan?): Boolean
+   {
+      return span?.style == typeface
+   }
+
+   private fun createSpan(): Any
+   {
+      return StyleSpan(typeface)
+   }
+
+
 }

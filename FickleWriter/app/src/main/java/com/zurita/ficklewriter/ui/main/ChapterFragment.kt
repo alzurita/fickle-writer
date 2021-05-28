@@ -3,7 +3,7 @@ package com.zurita.ficklewriter.ui.main
 import android.graphics.Typeface.BOLD
 import android.graphics.Typeface.ITALIC
 import android.os.Bundle
-import android.text.style.StyleSpan
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.ChapterFragmentBinding
 import com.zurita.ficklewriter.ui.editor.format.AlignmentMarkdownFormatter
-import com.zurita.ficklewriter.ui.editor.format.MarkupFormatter
+import com.zurita.ficklewriter.ui.editor.format.MarkdownFormatter
 import com.zurita.ficklewriter.ui.editor.format.TextReplaceFormatter
 import com.zurita.ficklewriter.ui.editor.format.TypefaceMarkdownFormatter
 
@@ -35,14 +35,6 @@ class ChapterFragment : Fragment()
     * Only valid between onCreateView and onDestroyView. */
    private val binding get() = _binding!!
 
-   /* Format the chapter text to either with or without markup */
-   private val markupFormatters = listOf(
-      MarkupFormatter("*", StyleSpan::class.java,
-                      { StyleSpan(BOLD) }, { span: StyleSpan -> span.style == BOLD }),
-      MarkupFormatter("_", StyleSpan::class.java,
-                      { StyleSpan(ITALIC) }, { span: StyleSpan -> span.style == ITALIC })
-   )
-
    /** True when markup is visible on the editor */
    private var markupTextIsVisible = false
 
@@ -52,12 +44,20 @@ class ChapterFragment : Fragment()
     * I think this is the best it's going to be, because there's
     * probably a speed hit if I try to scan the whole text each time.
     */
-   private val formatters = listOf(
+   private val activeFormatters = listOf<TextWatcher>(
       TypefaceMarkdownFormatter(specialChars = "*", BOLD),
       TypefaceMarkdownFormatter(specialChars = "_", ITALIC),
       AlignmentMarkdownFormatter(specialChars = "~"),
       TextReplaceFormatter(textBefore = "--", textAfter = "\u2013"),
       TextReplaceFormatter(textBefore = "\u2013-", textAfter = "\u2014")
+   )
+
+   private val fullFormatters = listOf<MarkdownFormatter>(
+      TypefaceMarkdownFormatter(specialChars = "*", BOLD),
+      TypefaceMarkdownFormatter(specialChars = "_", ITALIC),
+      AlignmentMarkdownFormatter(specialChars = "~"),
+      TextReplaceFormatter(textBefore = "--", textAfter = "\u2013"),
+      TextReplaceFormatter(textBefore = "---", textAfter = "\u2014")
    )
 
    override fun onCreateView(
@@ -100,18 +100,14 @@ class ChapterFragment : Fragment()
 
    private fun registerTextWatchers()
    {
-      for (formatter in formatters)
-      {
+      for (formatter in activeFormatters)
          binding.text.addTextChangedListener(formatter)
-      }
    }
 
    private fun unregisterTextWatchers()
    {
-      for (formatter in formatters)
-      {
+      for (formatter in activeFormatters)
          binding.text.removeTextChangedListener(formatter)
-      }
    }
 
    private fun toggleMarkup(menuItem: MenuItem)
@@ -126,13 +122,13 @@ class ChapterFragment : Fragment()
 
       if (markupTextIsVisible)
       {
-         for (markupFormatter in markupFormatters)
-            markupFormatter.spansToMarkup(binding.text.text)
+         for (formatter in fullFormatters)
+               formatter.spansToMarkdown(binding.text.text)
       }
       else
       {
-         for (markupFormatter in markupFormatters)
-            markupFormatter.markupToSpans(binding.text.text)
+         for (formatter in fullFormatters)
+               formatter.markdownToSpans(binding.text.text)
 
          registerTextWatchers()
       }
