@@ -1,5 +1,6 @@
 package com.zurita.ficklewriter.ui.main
 
+import android.graphics.Typeface
 import android.graphics.Typeface.BOLD
 import android.graphics.Typeface.ITALIC
 import android.os.Bundle
@@ -30,10 +31,17 @@ class ChapterFragment : Fragment()
    }
 
    private var _binding: ChapterFragmentBinding? = null
-
    /** Chapter binding to interact with underlying View
     * Only valid between onCreateView and onDestroyView. */
    private val binding get() = _binding!!
+
+   private var _sourceCodeTypeface: Typeface? = null
+   /** Font used for displaying plaintext with markup */
+   private val sourceCodeTypeface get() = _sourceCodeTypeface!!
+
+   private var _textNormalTypeface: Typeface? = null
+   /** Font normally displayed in edit text */
+   private val textNormalTypeface get() = _textNormalTypeface
 
    /** True when markup is visible on the editor */
    private var markupTextIsVisible = false
@@ -56,8 +64,8 @@ class ChapterFragment : Fragment()
       TypefaceMarkdownFormatter(specialChars = "*", BOLD),
       TypefaceMarkdownFormatter(specialChars = "_", ITALIC),
       AlignmentMarkdownFormatter(specialChars = "~"),
-      TextReplaceFormatter(textBefore = "--", textAfter = "\u2013"),
-      TextReplaceFormatter(textBefore = "---", textAfter = "\u2014")
+      TextReplaceFormatter(textBefore = "---", textAfter = "\u2014"), /** Needs to go before -- */
+      TextReplaceFormatter(textBefore = "--", textAfter = "\u2013")
    )
 
    override fun onCreateView(
@@ -80,6 +88,9 @@ class ChapterFragment : Fragment()
       setupToolbar()
 
       registerTextWatchers()
+
+      _sourceCodeTypeface = resources.getFont(R.font.source_code_pro_family)
+      _textNormalTypeface = binding.text.typeface
    }
 
    private fun setupToolbar()
@@ -124,6 +135,8 @@ class ChapterFragment : Fragment()
       {
          for (formatter in fullFormatters)
                formatter.spansToMarkdown(binding.text.text)
+
+         binding.text.typeface = sourceCodeTypeface
       }
       else
       {
@@ -131,6 +144,8 @@ class ChapterFragment : Fragment()
                formatter.markdownToSpans(binding.text.text)
 
          registerTextWatchers()
+
+         binding.text.typeface = textNormalTypeface
       }
    }
 }
