@@ -12,12 +12,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.ChapterFragmentBinding
+import com.zurita.ficklewriter.ui.editor.EditTitleDialog
+import com.zurita.ficklewriter.ui.editor.EditTitleDialogListener
 import com.zurita.ficklewriter.ui.editor.format.AlignmentMarkdownFormatter
 import com.zurita.ficklewriter.ui.editor.format.MarkdownFormatter
 import com.zurita.ficklewriter.ui.editor.format.TextReplaceFormatter
 import com.zurita.ficklewriter.ui.editor.format.TypefaceMarkdownFormatter
 
-class ChapterFragment : Fragment()
+class ChapterFragment
+   : Fragment(),
+     EditTitleDialogListener
 {
    companion object
    {
@@ -96,11 +100,13 @@ class ChapterFragment : Fragment()
    private fun setupToolbar()
    {
       binding.toolbar.inflateMenu(R.menu.chapter_options)
+      binding.toolbar.title = "Placeholder title"
       binding.toolbar.setOnMenuItemClickListener { menuItem ->
          var clickHandled = true
 
          when (menuItem.itemId)
          {
+            R.id.edit_title -> editTitle(menuItem)
             R.id.toggle_markup -> toggleMarkup(menuItem)
             else -> clickHandled = false
          }
@@ -147,5 +153,19 @@ class ChapterFragment : Fragment()
 
          binding.text.typeface = textNormalTypeface
       }
+   }
+
+   private fun editTitle(menuItem: MenuItem?)
+   {
+      val dialog = EditTitleDialog(
+         binding.toolbar.title,
+         this
+      )
+      dialog.show(parentFragmentManager, "EditTitleDialog")
+   }
+
+   override fun onTitleEdited(title: String)
+   {
+      binding.toolbar.title = title
    }
 }

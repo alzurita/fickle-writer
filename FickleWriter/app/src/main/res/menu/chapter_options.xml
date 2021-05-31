@@ -12,6 +12,12 @@
       />
 
    <item
+      android:id="@+id/edit_title"
+      android:title="@string/edit_title"
+      app:showAsAction="never"
+      />
+
+   <item
       android:id="@+id/toggle_markup"
       android:title="@string/show_markup"
       app:showAsAction="never"

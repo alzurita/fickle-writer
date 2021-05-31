@@ -17,4 +17,7 @@
    <string name="show_markup">Show markup</string>
    <string name="hide_markup">Hide markup</string>
    <string name="take_snapshot">Take snapshot</string>
+   <string name="edit_title">Edit title</string>
+   <string name="ok">OK</string>
+   <string name="cancel">Cancel</string>
 </resources>
