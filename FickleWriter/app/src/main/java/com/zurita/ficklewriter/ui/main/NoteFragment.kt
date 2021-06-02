@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor
+package com.zurita.ficklewriter.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

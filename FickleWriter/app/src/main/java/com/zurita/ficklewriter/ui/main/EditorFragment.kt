@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor
+package com.zurita.ficklewriter.ui.main
 
 import android.os.Bundle
 import android.view.Gravity
@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.EditorFragmentBinding
+import com.zurita.ficklewriter.ui.editor.EditorViewModel
+import com.zurita.ficklewriter.ui.editor.Note
+import com.zurita.ficklewriter.ui.editor.NoteViewAdapter
+import com.zurita.ficklewriter.ui.editor.NoteViewAdapterListener
 
 class EditorFragment
    : Fragment(),

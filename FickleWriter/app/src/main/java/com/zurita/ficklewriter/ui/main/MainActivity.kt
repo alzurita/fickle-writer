@@ -7,8 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.zurita.ficklewriter.R
-import com.zurita.ficklewriter.ui.editor.EditorFragment
-import com.zurita.ficklewriter.ui.editor.NoteFragment
 
 class MainActivity : AppCompatActivity()
 {
@@ -27,7 +25,7 @@ class MainActivity : AppCompatActivity()
       else if (savedInstanceState == null)
       {
          supportFragmentManager.beginTransaction()
-               .replace(R.id.container, ChapterFragment.newInstance())
+               .replace(R.id.container, EditorFragment.newInstance())
                .commitNow()
       }
 
