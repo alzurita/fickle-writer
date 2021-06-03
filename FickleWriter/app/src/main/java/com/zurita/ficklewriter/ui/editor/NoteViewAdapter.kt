@@ -106,7 +106,7 @@ class NoteViewAdapter(
          NoteOptions ->
          {
             val view = inflater.inflate(R.layout.note_options, parent, false)
-            NoteOptionsViewHolder(view) { note -> onPinSelected(note) }
+            NoteOptionsViewHolder(view) { note -> callback.pinNote(note) }
          }
          ChapterSection ->
          {
@@ -197,20 +197,6 @@ class NoteViewAdapter(
             itemTypeList.add(itemOneBelowPos, AdapterItem(NoteOptions, itemTypeList[position].data))
             notifyItemInserted(itemOneBelowPos)
          }
-      }
-   }
-
-   private fun onPinSelected(
-      note: Note
-   )
-   {
-      if(note.pinned)
-      {
-         callback.pinNote(note)
-      }
-      else
-      {
-         callback.unpinNote(note)
       }
    }
 

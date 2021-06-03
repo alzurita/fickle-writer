@@ -12,8 +12,20 @@
       android:theme="@style/Theme.FickleWriter">
       <activity
          android:name=".ui.main.MainActivity"
-         android:allowEmbedded="true"
          android:documentLaunchMode="intoExisting"
+         >
+         <meta-data
+            android:name="android.app.shortcuts"
+            android:resource="@xml/shortcuts" />
+         <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+      </activity>
+      <activity
+         android:name=".ui.main.NoteActivity"
+         android:allowEmbedded="true"
+         android:documentLaunchMode="always"
          android:supportsPictureInPicture="true"
          android:configChanges=
             "screenSize|smallestScreenSize|screenLayout|orientation"
@@ -23,7 +35,6 @@
             android:resource="@xml/shortcuts" />
          <intent-filter>
             <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
          </intent-filter>
       </activity>
    </application>
