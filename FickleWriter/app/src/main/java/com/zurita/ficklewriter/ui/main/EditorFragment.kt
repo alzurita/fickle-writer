@@ -10,9 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.EditorFragmentBinding
-import com.zurita.ficklewriter.ui.editor.EditorViewModel
-import com.zurita.ficklewriter.ui.editor.Note
-import com.zurita.ficklewriter.ui.editor.NoteViewAdapter
+import com.zurita.ficklewriter.model.EditorViewModel
+import com.zurita.ficklewriter.data.Note
+import com.zurita.ficklewriter.ui.editor.EditorAdapter
 import com.zurita.ficklewriter.ui.editor.NoteViewAdapterListener
 import com.zurita.ficklewriter.ui.main.CustomIntent.DATA_NOTE
 
@@ -62,7 +62,7 @@ class EditorFragment
    private fun setupAdapter()
    {
       binding.mainPanel?.notesList?.adapter =
-            NoteViewAdapter(layoutInflater, context!!, this)
+            EditorAdapter(layoutInflater, context!!, this)
 
       binding.mainPanel?.notesList?.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)

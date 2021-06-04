@@ -1,7 +1,6 @@
-package com.zurita.ficklewriter.ui.editor.format
+package com.zurita.ficklewriter.ui.format
 
 import android.text.Editable
-import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 
 interface MarkdownFormatter
 {

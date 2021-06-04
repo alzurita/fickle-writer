@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor
+package com.zurita.ficklewriter.data
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

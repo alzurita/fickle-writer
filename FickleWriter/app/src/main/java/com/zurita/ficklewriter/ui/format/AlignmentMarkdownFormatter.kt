@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor.format
+package com.zurita.ficklewriter.ui.format
 
 import android.text.Editable
 import android.text.Layout
@@ -6,7 +6,6 @@ import android.text.Spannable
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.TextWatcher
 import android.text.style.AlignmentSpan
-import android.util.Log
 import android.util.Range
 
 class AlignmentMarkdownFormatter(

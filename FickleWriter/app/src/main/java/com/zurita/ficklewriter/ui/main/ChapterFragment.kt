@@ -14,10 +14,10 @@ import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.ChapterFragmentBinding
 import com.zurita.ficklewriter.ui.editor.EditTitleDialog
 import com.zurita.ficklewriter.ui.editor.EditTitleDialogListener
-import com.zurita.ficklewriter.ui.editor.format.AlignmentMarkdownFormatter
-import com.zurita.ficklewriter.ui.editor.format.MarkdownFormatter
-import com.zurita.ficklewriter.ui.editor.format.TextReplaceFormatter
-import com.zurita.ficklewriter.ui.editor.format.TypefaceMarkdownFormatter
+import com.zurita.ficklewriter.ui.format.AlignmentMarkdownFormatter
+import com.zurita.ficklewriter.ui.format.MarkdownFormatter
+import com.zurita.ficklewriter.ui.format.TextReplaceFormatter
+import com.zurita.ficklewriter.ui.format.TypefaceMarkdownFormatter
 
 class ChapterFragment
    : Fragment(),

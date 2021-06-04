@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor
+package com.zurita.ficklewriter.ui.editor.viewholder
 
 import android.view.View
 import androidx.core.content.res.ResourcesCompat

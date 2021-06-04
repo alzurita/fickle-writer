@@ -6,8 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
+import com.zurita.ficklewriter.data.Note
+import com.zurita.ficklewriter.ui.editor.viewholder.*
 
-class NoteViewAdapter(
+interface NoteViewAdapterListener
+{
+   fun pinNote(note: Note)
+}
+
+class EditorAdapter(
    private val inflater: LayoutInflater,
    private val context: Context,
    private val callback: NoteViewAdapterListener

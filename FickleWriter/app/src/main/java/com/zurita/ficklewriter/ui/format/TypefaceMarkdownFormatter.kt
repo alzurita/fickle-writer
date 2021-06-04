@@ -1,11 +1,10 @@
-package com.zurita.ficklewriter.ui.editor.format
+package com.zurita.ficklewriter.ui.format
 
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.TextWatcher
 import android.text.style.StyleSpan
-import android.util.Log
 import android.util.Range
 import java.lang.Integer.max
 

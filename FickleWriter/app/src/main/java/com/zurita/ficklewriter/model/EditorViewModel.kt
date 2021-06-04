@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor
+package com.zurita.ficklewriter.model
 
 import androidx.lifecycle.ViewModel
 

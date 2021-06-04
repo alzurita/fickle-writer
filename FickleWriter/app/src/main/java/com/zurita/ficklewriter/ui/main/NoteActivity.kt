@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.NoteFragmentBinding
 import com.zurita.ficklewriter.databinding.NoteFragmentWindowedBinding
-import com.zurita.ficklewriter.ui.editor.Note
+import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.ui.main.CustomIntent.DATA_NOTE
 
 class NoteActivity : AppCompatActivity()

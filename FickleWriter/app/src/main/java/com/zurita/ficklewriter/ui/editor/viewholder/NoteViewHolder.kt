@@ -1,8 +1,14 @@
-package com.zurita.ficklewriter.ui.editor
+package com.zurita.ficklewriter.ui.editor.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.databinding.NoteBinding
+
+interface NoteViewHolderIntf
+{
+   fun bind(item: Note)
+}
 
 class NoteViewHolder(
    itemView: View,

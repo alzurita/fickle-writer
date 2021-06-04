@@ -1,4 +1,4 @@
-package com.zurita.ficklewriter.ui.editor.format
+package com.zurita.ficklewriter.ui.format
 
 import android.text.Editable
 import android.text.TextWatcher
