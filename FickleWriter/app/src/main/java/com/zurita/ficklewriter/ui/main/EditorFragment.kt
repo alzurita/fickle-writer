@@ -2,23 +2,19 @@ package com.zurita.ficklewriter.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
 import android.view.ViewGroup
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.databinding.EditorFragmentBinding
 import com.zurita.ficklewriter.ui.editor.EditorViewModel
 import com.zurita.ficklewriter.ui.editor.Note
 import com.zurita.ficklewriter.ui.editor.NoteViewAdapter
 import com.zurita.ficklewriter.ui.editor.NoteViewAdapterListener
+import com.zurita.ficklewriter.ui.main.CustomIntent.DATA_NOTE
 
 class EditorFragment
    : Fragment(),
@@ -75,7 +71,7 @@ class EditorFragment
    override fun pinNote(note: Note)
    {
       val intent = Intent(context, NoteActivity::class.java).apply {
-         putExtra("note", note)
+         putExtra(DATA_NOTE, note)
       }
       context?.startActivity(intent)
    }

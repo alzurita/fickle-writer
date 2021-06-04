@@ -41,6 +41,6 @@ class NoteFragment : Fragment()
    )
    {
       super.onViewCreated(view, savedInstanceState)
-      binding.textView.text = title
+      //binding.textView.text = title
    }
 }
