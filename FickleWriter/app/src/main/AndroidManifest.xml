@@ -24,7 +24,7 @@
          </intent-filter>
       </activity>
       <activity
-         android:name=".ui.main.NoteActivity"
+         android:name=".ui.main.NotesContainerActivity"
          android:allowEmbedded="true"
          android:documentLaunchMode="intoExisting"
          android:supportsPictureInPicture="true"

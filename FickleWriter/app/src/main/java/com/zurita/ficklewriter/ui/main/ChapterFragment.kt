@@ -53,7 +53,7 @@ class ChapterFragment
    /** List of objects that format markup text as soon as it
     * is entered. It isn't sophisticated, instead trading off
     * simplicity for some possible error.
-    * I think this is the best it's going to be, because there's
+    * todo: I think this is the best it's going to be, because there's
     * probably a speed hit if I try to scan the whole text each time.
     */
    private val activeFormatters = listOf<TextWatcher>(

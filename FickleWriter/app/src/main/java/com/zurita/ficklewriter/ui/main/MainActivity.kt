@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity()
       if(intent.action == CustomIntent.VIEW_PINNED_NOTE)
       {
          supportFragmentManager.beginTransaction()
-               .replace(R.id.container, NoteFragment.newInstance())
+               .replace(R.id.container, NotesContainerFragment.newInstance())
                .commitNow()
       }
       else if (savedInstanceState == null)

@@ -70,7 +70,7 @@ class EditorFragment
 
    override fun pinNote(note: Note)
    {
-      val intent = Intent(context, NoteActivity::class.java).apply {
+      val intent = Intent(context, NotesContainerActivity::class.java).apply {
          putExtra(DATA_NOTE, note)
       }
       context?.startActivity(intent)
