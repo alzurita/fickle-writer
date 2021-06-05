@@ -1,39 +1,35 @@
 package com.zurita.ficklewriter.ui.notepage
 
-import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.RecyclerView.NO_ID
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.adapter.FragmentViewHolder
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.data.Note
-import com.zurita.ficklewriter.ui.main.NoteFragment
-import com.zurita.ficklewriter.ui.main.NotesContainerFragment
 
 class NotePageAdapter(
-   fragmentManager: FragmentManager,
-   lifecycle: Lifecycle,
+   private val inflater: LayoutInflater,
    private val notes: List<Note>
-) : FragmentStateAdapter(fragmentManager, lifecycle)
+) : RecyclerView.Adapter<NotePageViewHolder>()
 {
    override fun getItemCount(): Int
    {
       return notes.size
    }
 
-   override fun getItemId(position: Int): Long
+   override fun onCreateViewHolder(
+      parent: ViewGroup,
+      viewType: Int
+   ): NotePageViewHolder
    {
-      return if(position < notes.size) 1 else NO_ID
+      val view = inflater.inflate(R.layout.note_view, parent, false)
+      return NotePageViewHolder(view)
    }
 
-   override fun containsItem(itemId: Long): Boolean
+   override fun onBindViewHolder(
+      holder: NotePageViewHolder,
+      position: Int
+   )
    {
-      return itemId.toInt() == 1
-   }
-
-   override fun createFragment(position: Int): Fragment
-   {
-      return NoteFragment.newInstance(notes[position])
+      holder.bind(notes[position])
    }
 }

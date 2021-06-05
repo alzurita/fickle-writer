@@ -3,7 +3,7 @@ package com.zurita.ficklewriter.ui.editor.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.data.Note
-import com.zurita.ficklewriter.databinding.NoteBinding
+import com.zurita.ficklewriter.databinding.ListHeaderBinding
 
 interface NoteViewHolderIntf
 {
@@ -16,7 +16,7 @@ class NoteViewHolder(
 ) : RecyclerView.ViewHolder(itemView),
     NoteViewHolderIntf
 {
-   private val binding = NoteBinding.bind(itemView)
+   private val binding = ListHeaderBinding.bind(itemView)
 
    init
    {
@@ -25,7 +25,7 @@ class NoteViewHolder(
 
    override fun bind(item: Note)
    {
-      binding.noteHeader.title.text = item.title
-      binding.noteHeader.shortDescription.text = item.shortDescription
+      binding.title.text = item.title
+      binding.shortDescription.text = item.shortDescription
    }
 }

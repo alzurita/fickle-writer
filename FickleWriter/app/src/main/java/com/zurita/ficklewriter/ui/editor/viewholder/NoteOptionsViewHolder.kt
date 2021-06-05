@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.data.Note
-import com.zurita.ficklewriter.databinding.NoteOptionsBinding
+import com.zurita.ficklewriter.databinding.ListOptionsBinding
 
 class NoteOptionsViewHolder(
    itemView: View,
@@ -12,7 +12,7 @@ class NoteOptionsViewHolder(
 ) : RecyclerView.ViewHolder(itemView),
     NoteViewHolderIntf
 {
-   private val binding = NoteOptionsBinding.bind(itemView)
+   private val binding = ListOptionsBinding.bind(itemView)
 
    private var note = Note()
 

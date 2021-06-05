@@ -92,37 +92,37 @@ class EditorAdapter(
       {
          SummarySection ->
          {
-            val view = inflater.inflate(R.layout.section_header, parent, false)
+            val view = inflater.inflate(R.layout.list_section_header, parent, false)
             SummarySectionViewHolder(view) { position -> onSectionSelected(position) }
          }
          SummaryHeader ->
          {
-            val view = inflater.inflate(R.layout.story_overview, parent, false)
+            val view = inflater.inflate(R.layout.list_story_overview, parent, false)
             SummaryHeaderViewHolder(view)
          }
          NoteSection ->
          {
-            val view = inflater.inflate(R.layout.section_header, parent, false)
+            val view = inflater.inflate(R.layout.list_section_header, parent, false)
             NoteSectionViewHolder(view) { position -> onSectionSelected(position) }
          }
          NoteHeader ->
          {
-            val view = inflater.inflate(R.layout.note, parent, false)
+            val view = inflater.inflate(R.layout.list_header, parent, false)
             NoteViewHolder(view) { position -> onNoteHeaderSelected(position) }
          }
          NoteOptions ->
          {
-            val view = inflater.inflate(R.layout.note_options, parent, false)
+            val view = inflater.inflate(R.layout.list_options, parent, false)
             NoteOptionsViewHolder(view) { note -> callback.pinNote(note) }
          }
          ChapterSection ->
          {
-            val view = inflater.inflate(R.layout.section_header, parent, false)
+            val view = inflater.inflate(R.layout.list_section_header, parent, false)
             ChapterSectionViewHolder(view) { position -> onSectionSelected(position) }
          }
          ChapterHeader ->
          {
-            val view = inflater.inflate(R.layout.note, parent, false)
+            val view = inflater.inflate(R.layout.list_header, parent, false)
             ChapterViewHolder(view)
          }
          else ->

@@ -39,14 +39,7 @@ class NotesContainerActivity : AppCompatActivity()
          // Remove the toolbar and tabLayout if we are in windowed mode, because
          // there's not enough room for it
          binding.toolbar.visibility = GONE
-//         binding.tabLayout.visibility = GONE
-         // This allows for longer note titles and more tabs without
-         // squishing them all together
-         binding.tabLayout.tabMode = MODE_SCROLLABLE
-
-         // Only care about waiting for the fragment to be
-         // created if we need to sync with the tabLayout
-         viewModel.notesContainerCreated.observe(this) { setupTabLayoutMediator(it) }
+         binding.tabLayout.visibility = GONE
       }
       else
       {

@@ -45,7 +45,7 @@ class NotesContainerFragment : Fragment()
    )
    {
       super.onViewCreated(view, savedInstanceState)
-      binding.pager.adapter = NotePageAdapter(parentFragmentManager, lifecycle, viewModel.notes)
+      binding.pager.adapter = NotePageAdapter(layoutInflater, viewModel.notes)
       activity?.let { viewModel.lastNoteAdded.observe(it) { note -> onNoteAdded(note) } }
    }
 
