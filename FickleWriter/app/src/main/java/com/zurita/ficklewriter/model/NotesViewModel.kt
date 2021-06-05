@@ -10,13 +10,19 @@ class NotesViewModel : ViewModel()
    val notes = mutableListOf<Note>()
    val notesContainerCreated = MutableLiveData(false)
    val lastNoteAdded = MutableLiveData<Note?>(null)
+   val foregroundPosition = MutableLiveData(-1)
 
    fun addNote(note: Note?)
    {
       if(note == null)
          return
 
-      notes.add(note)
-      lastNoteAdded.postValue(note)
+      if(note !in notes)
+      {
+         notes.add(note)
+         lastNoteAdded.postValue(note)
+      }
+
+      foregroundPosition.postValue(notes.indexOf(note))
    }
 }

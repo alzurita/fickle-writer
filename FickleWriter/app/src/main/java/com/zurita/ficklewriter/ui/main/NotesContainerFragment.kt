@@ -13,6 +13,9 @@ import com.zurita.ficklewriter.databinding.NotesContainerFragmentBinding
 import com.zurita.ficklewriter.model.NotesViewModel
 import com.zurita.ficklewriter.ui.notepage.NotePageAdapter
 
+/**
+ * This fragment contains all the notes that have been pinned.
+ */
 class NotesContainerFragment : Fragment()
 {
    companion object
@@ -46,7 +49,16 @@ class NotesContainerFragment : Fragment()
    {
       super.onViewCreated(view, savedInstanceState)
       binding.pager.adapter = NotePageAdapter(layoutInflater, viewModel.notes)
-      activity?.let { viewModel.lastNoteAdded.observe(it) { note -> onNoteAdded(note) } }
+      activity?.let {
+         viewModel.lastNoteAdded.observe(it) { note -> onNoteAdded(note) }
+         viewModel.foregroundPosition.observe(it) { position -> onNoteBringToForeground(position) }
+      }
+   }
+
+   private fun onNoteBringToForeground(position: Int)
+   {
+      if(position >= 0)
+         binding.pager.setCurrentItem(position, true)
    }
 
    override fun onAttach(context: Context)
