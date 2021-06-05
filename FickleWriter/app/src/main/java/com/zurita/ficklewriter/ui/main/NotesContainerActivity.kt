@@ -32,7 +32,7 @@ class NotesContainerActivity : AppCompatActivity()
       _binding = NotesContainerActivityBinding.bind(findViewById(R.id.container))
 
       val note = intent?.getParcelableExtra<Note>(DATA_NOTE)
-      viewModel.addNote(note)
+      viewModel.pinNote(note)
 
       if (isInMultiWindowMode)
       {
@@ -64,7 +64,7 @@ class NotesContainerActivity : AppCompatActivity()
       super.onNewIntent(intent)
 
       val note = intent?.getParcelableExtra<Note>(DATA_NOTE)
-      viewModel.addNote(note)
+      viewModel.pinNote(note)
    }
 
    /**
