@@ -9,9 +9,9 @@
 
    <fragment
       android:id="@+id/editorFragment"
-      android:name="com.zurita.ficklewriter.ui.main.EditorFragment"
+      android:name="com.zurita.ficklewriter.ui.main.MainFragment"
       android:label="editor_fragment"
-      tools:layout="@layout/editor_fragment"
+      tools:layout="@layout/main_fragment"
       >
       <action
          android:id="@+id/action_editorFragment_to_notesContainerFragment"
