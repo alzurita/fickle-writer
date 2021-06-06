@@ -17,10 +17,19 @@
          android:id="@+id/action_editorFragment_to_notesContainerFragment"
          app:destination="@id/notesContainerFragment"
          />
+      <action
+         android:id="@+id/action_editorFragment_to_notesContainerActivity"
+         app:destination="@id/notesContainerActivity"
+         />
    </fragment>
    <fragment
       android:id="@+id/notesContainerFragment"
       android:name="com.zurita.ficklewriter.ui.main.NotesContainerFragment"
       android:label="NotesContainerFragment"
+      />
+   <activity
+      android:id="@+id/notesContainerActivity"
+      android:name="com.zurita.ficklewriter.ui.main.NotesContainerActivity"
+      android:label="NotesContainerActivity"
       />
 </navigation>

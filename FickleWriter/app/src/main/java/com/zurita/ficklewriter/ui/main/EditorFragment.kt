@@ -1,6 +1,7 @@
 package com.zurita.ficklewriter.ui.main
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

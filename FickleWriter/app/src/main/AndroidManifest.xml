@@ -27,7 +27,6 @@
          android:name=".ui.main.NotesContainerActivity"
          android:allowEmbedded="true"
          android:documentLaunchMode="intoExisting"
-         android:supportsPictureInPicture="true"
          android:resizeableActivity="true"
          >
          <intent-filter>

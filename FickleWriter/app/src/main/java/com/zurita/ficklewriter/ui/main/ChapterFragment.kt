@@ -23,17 +23,6 @@ class ChapterFragment
    : Fragment(),
      EditTitleDialogListener
 {
-   companion object
-   {
-      /**
-       * The API documentation recommends following this pattern
-       * because it allows you to vertically separate the fragment
-       * from it’s hosting activity. It keeps your application
-       * components modular.
-       */
-      fun newInstance() = ChapterFragment()
-   }
-
    private var _binding: ChapterFragmentBinding? = null
    /** Chapter binding to interact with underlying View
     * Only valid between onCreateView and onDestroyView. */
@@ -50,22 +39,17 @@ class ChapterFragment
    /** True when markup is visible on the editor */
    private var markupTextIsVisible = false
 
-   /** List of objects that format markup text as soon as it
-    * is entered. It isn't sophisticated, instead trading off
-    * simplicity for some possible error.
-    * todo: I think this is the best it's going to be, because there's
-    * probably a speed hit if I try to scan the whole text each time.
+   /**
+    * After considering dynamically formatting the text as we go,
+    * I think that it doesn't make sense to have that. It will make
+    * errors and does feel kind of jerky. Also, it limits the types
+    * of formatters that can be used because they can interfere
+    * with each other.
     */
-   private val activeFormatters = listOf<TextWatcher>(
-      TypefaceMarkdownFormatter(specialChars = "*", BOLD),
-      TypefaceMarkdownFormatter(specialChars = "_", ITALIC),
-      AlignmentMarkdownFormatter(specialChars = "~"),
-      TextReplaceFormatter(textBefore = "--", textAfter = "\u2013"),
-      TextReplaceFormatter(textBefore = "\u2013-", textAfter = "\u2014")
-   )
-
    private val fullFormatters = listOf<MarkdownFormatter>(
-      TypefaceMarkdownFormatter(specialChars = "*", BOLD),
+      TypefaceMarkdownFormatter(specialChars = "**", BOLD), /** Needs to go before * */
+      TypefaceMarkdownFormatter(specialChars = "__", BOLD), /** Needs to go before _ */
+      TypefaceMarkdownFormatter(specialChars = "*", ITALIC),
       TypefaceMarkdownFormatter(specialChars = "_", ITALIC),
       AlignmentMarkdownFormatter(specialChars = "~"),
       TextReplaceFormatter(textBefore = "---", textAfter = "\u2014"), /** Needs to go before -- */
@@ -117,14 +101,14 @@ class ChapterFragment
 
    private fun registerTextWatchers()
    {
-      for (formatter in activeFormatters)
-         binding.text.addTextChangedListener(formatter)
+      // Nothing to do for now
+      // Keeping it anyway because I'll probably
+      // use it for triggering saves
    }
 
    private fun unregisterTextWatchers()
    {
-      for (formatter in activeFormatters)
-         binding.text.removeTextChangedListener(formatter)
+      // Nothing to do for now
    }
 
    private fun toggleMarkup(menuItem: MenuItem)
@@ -149,10 +133,10 @@ class ChapterFragment
          for (formatter in fullFormatters)
                formatter.markdownToSpans(binding.text.text)
 
-         registerTextWatchers()
-
          binding.text.typeface = textNormalTypeface
       }
+
+      registerTextWatchers()
    }
 
    private fun editTitle(menuItem: MenuItem?)

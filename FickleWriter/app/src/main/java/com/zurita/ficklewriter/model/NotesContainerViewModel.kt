@@ -6,16 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.zurita.ficklewriter.data.Note
 
 /**
- * ViewModel connecting the NotesContainerFragment to its parent Activity.
+ * ViewModel for the NotesContainerFragment
  */
 class NotesContainerViewModel : ViewModel()
 {
-   /**
-    * This live data is used to allow the NotesContainerFragment to notify
-    * when its pager is initialized and ready to be synced to if the UI includes
-    * a tab header.
-    */
-   val notesContainerCreated = MutableLiveData(false)
+   var isInWindowedMode = false
 
    private val _notes = mutableListOf<Note>()
    /** List of pinned notes */
