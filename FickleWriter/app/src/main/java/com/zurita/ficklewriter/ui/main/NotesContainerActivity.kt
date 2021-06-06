@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.databinding.NotesContainerActivityBinding
-import com.zurita.ficklewriter.model.NotesViewModel
+import com.zurita.ficklewriter.model.NotesContainerViewModel
 import com.zurita.ficklewriter.ui.main.CustomIntent.DATA_NOTE
 import kotlinx.android.synthetic.main.notes_container_fragment.*
 
@@ -23,7 +23,7 @@ class NotesContainerActivity : AppCompatActivity()
          return _binding!!
       }
 
-   private val viewModel: NotesViewModel by viewModels()
+   private val containerViewModel: NotesContainerViewModel by viewModels()
 
    override fun onCreate(savedInstanceState: Bundle?)
    {
@@ -32,7 +32,7 @@ class NotesContainerActivity : AppCompatActivity()
       _binding = NotesContainerActivityBinding.bind(findViewById(R.id.container))
 
       val note = intent?.getParcelableExtra<Note>(DATA_NOTE)
-      viewModel.pinNote(note)
+      containerViewModel.addNote(note)
 
       if (isInMultiWindowMode)
       {
@@ -51,7 +51,7 @@ class NotesContainerActivity : AppCompatActivity()
 
          // Only care about waiting for the fragment to be
          // created if we need to sync with the tabLayout
-         viewModel.notesContainerCreated.observe(this) { setupTabLayoutMediator(it) }
+         containerViewModel.notesContainerCreated.observe(this) { setupTabLayoutMediator(it) }
       }
 
       supportFragmentManager.beginTransaction()
@@ -64,7 +64,7 @@ class NotesContainerActivity : AppCompatActivity()
       super.onNewIntent(intent)
 
       val note = intent?.getParcelableExtra<Note>(DATA_NOTE)
-      viewModel.pinNote(note)
+      containerViewModel.addNote(note)
    }
 
    /**
@@ -86,8 +86,8 @@ class NotesContainerActivity : AppCompatActivity()
                         (supportFragmentManager.findFragmentByTag("taggy") as
                               NotesContainerFragment?)?.pager!!
       ) { tab, position ->
-         if(position < viewModel.notes.size)
-            tab.text = viewModel.notes[position].title
+         if(position < containerViewModel.notes.size)
+            tab.text = containerViewModel.notes[position].title
       }.attach()
    }
 }

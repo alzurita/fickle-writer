@@ -9,15 +9,10 @@ import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.ui.editor.viewholder.*
 
-interface NoteViewAdapterListener
-{
-   fun pinNote(note: Note)
-}
-
 class EditorAdapter(
    private val inflater: LayoutInflater,
    private val context: Context,
-   private val callback: NoteViewAdapterListener
+   private val callback: NoteOptionsViewHolderListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
    /**
@@ -113,7 +108,7 @@ class EditorAdapter(
          NoteOptions ->
          {
             val view = inflater.inflate(R.layout.list_options, parent, false)
-            NoteOptionsViewHolder(view) { note -> callback.pinNote(note) }
+            NoteOptionsViewHolder(view, callback)
          }
          ChapterSection ->
          {

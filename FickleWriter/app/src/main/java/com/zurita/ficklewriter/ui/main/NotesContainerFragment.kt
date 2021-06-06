@@ -2,7 +2,6 @@ package com.zurita.ficklewriter.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.databinding.NotesContainerFragmentBinding
-import com.zurita.ficklewriter.model.NotesViewModel
+import com.zurita.ficklewriter.model.NotesContainerViewModel
 import com.zurita.ficklewriter.ui.notepage.NotePageAdapter
 
 /**
@@ -30,7 +29,7 @@ class NotesContainerFragment : Fragment()
          return _binding!!
       }
 
-   private val viewModel by activityViewModels<NotesViewModel>()
+   private val viewModel by activityViewModels<NotesContainerViewModel>()
 
    override fun onCreateView(
       inflater: LayoutInflater,

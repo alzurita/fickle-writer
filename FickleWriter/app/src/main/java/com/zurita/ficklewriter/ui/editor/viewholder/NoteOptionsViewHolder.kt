@@ -6,9 +6,15 @@ import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.databinding.ListOptionsBinding
 
+interface NoteOptionsViewHolderListener
+{
+   fun onPinSelected(note: Note)
+   fun onEditSelected(note: Note)
+}
+
 class NoteOptionsViewHolder(
    itemView: View,
-   onPinSelected: (note: Note) -> Unit
+   listener: NoteOptionsViewHolderListener
 ) : RecyclerView.ViewHolder(itemView),
     NoteViewHolderIntf
 {
@@ -21,7 +27,10 @@ class NoteOptionsViewHolder(
    init
    {
       binding.pin.setOnClickListener {
-         onPinSelected(note)
+         listener.onPinSelected(note)
+      }
+      binding.edit.setOnClickListener {
+         listener.onEditSelected(note)
       }
       binding.pin.text = textPin
    }

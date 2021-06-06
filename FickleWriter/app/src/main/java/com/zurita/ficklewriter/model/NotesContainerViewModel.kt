@@ -8,7 +8,7 @@ import com.zurita.ficklewriter.data.Note
 /**
  * ViewModel connecting the NotesContainerFragment to its parent Activity.
  */
-class NotesViewModel : ViewModel()
+class NotesContainerViewModel : ViewModel()
 {
    /**
     * This live data is used to allow the NotesContainerFragment to notify
@@ -41,7 +41,7 @@ class NotesViewModel : ViewModel()
     *
     * @param note note that will be added and brought to the foreground
     */
-   fun pinNote(note: Note?)
+   fun addNote(note: Note?)
    {
       if(note == null)
          return

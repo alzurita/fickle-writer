@@ -16,19 +16,6 @@ class MainActivity : AppCompatActivity()
       super.onCreate(savedInstanceState)
       setContentView(R.layout.main_activity)
 
-      if(intent.action == CustomIntent.VIEW_PINNED_NOTE)
-      {
-         supportFragmentManager.beginTransaction()
-               .replace(R.id.container, NotesContainerFragment.newInstance())
-               .commitNow()
-      }
-      else if (savedInstanceState == null)
-      {
-         supportFragmentManager.beginTransaction()
-               .replace(R.id.container, EditorFragment.newInstance())
-               .commitNow()
-      }
-
       // The first activity to call the view model will
       // create it. All subsequent calls from activities/fragments
       // will use the same model.
@@ -40,6 +27,7 @@ class MainActivity : AppCompatActivity()
    {
       // Create the NotificationChannel, but only on API 26+ because
       // the NotificationChannel class is new and not in the support library
+      // Do not remove this check
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
       {
          val name = getString(R.string.notification_channel_name)
