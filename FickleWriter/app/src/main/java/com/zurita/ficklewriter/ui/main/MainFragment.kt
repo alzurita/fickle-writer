@@ -14,12 +14,12 @@ import com.zurita.ficklewriter.databinding.MainFragmentBinding
 import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.model.NotesContainerViewModel
 import com.zurita.ficklewriter.ui.editor.EditorAdapter
-import com.zurita.ficklewriter.ui.editor.viewholder.NoteOptionsViewHolderListener
+import com.zurita.ficklewriter.ui.editor.EditorAdapterListener
 import com.zurita.ficklewriter.ui.main.CustomIntent.DATA_NOTE
 
 class MainFragment
    : Fragment(),
-     NoteOptionsViewHolderListener
+     EditorAdapterListener
 {
    private var _binding: MainFragmentBinding? = null
    /** Editor binding to interact with underlying View
@@ -50,10 +50,20 @@ class MainFragment
    private fun setupAdapter()
    {
       binding.mainPanel?.notesList?.adapter =
-            EditorAdapter(layoutInflater, requireContext(), this)
+            EditorAdapter(layoutInflater,this)
 
       binding.mainPanel?.notesList?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+   }
+
+   override fun onChapterSelected(note: Note?)
+   {
+      val navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+      if(navController.currentDestination?.id == R.id.editorFragment)
+      {
+         val directions = MainFragmentDirections.actionEditorFragmentToChapterFragment()
+         navController.navigate(directions)
+      }
    }
 
    override fun onPinSelected(note: Note)

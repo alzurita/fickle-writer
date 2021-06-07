@@ -1,6 +1,5 @@
 package com.zurita.ficklewriter.ui.editor
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,7 @@ import com.zurita.ficklewriter.ui.editor.viewholder.*
 
 class EditorAdapter(
    private val inflater: LayoutInflater,
-   private val context: Context,
-   private val callback: NoteOptionsViewHolderListener
+   private val callback: EditorAdapterListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
    /**
@@ -118,7 +116,7 @@ class EditorAdapter(
          ChapterHeader ->
          {
             val view = inflater.inflate(R.layout.list_header, parent, false)
-            ChapterViewHolder(view)
+            ChapterViewHolder(view, callback)
          }
          else ->
          {

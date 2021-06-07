@@ -18,8 +18,8 @@
          app:destination="@id/notesContainerFragment"
          />
       <action
-         android:id="@+id/action_editorFragment_to_notesContainerActivity"
-         app:destination="@id/notesContainerActivity"
+         android:id="@+id/action_editorFragment_to_chapterFragment"
+         app:destination="@id/chapterFragment"
          />
    </fragment>
    <fragment
@@ -27,9 +27,9 @@
       android:name="com.zurita.ficklewriter.ui.main.NotesContainerFragment"
       android:label="NotesContainerFragment"
       />
-   <activity
-      android:id="@+id/notesContainerActivity"
-      android:name="com.zurita.ficklewriter.ui.main.NotesContainerActivity"
-      android:label="NotesContainerActivity"
+   <fragment
+      android:id="@+id/chapterFragment"
+      android:name="com.zurita.ficklewriter.ui.main.ChapterFragment"
+      android:label="ChapterFragment"
       />
 </navigation>

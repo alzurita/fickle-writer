@@ -5,16 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zurita.ficklewriter.R
 import com.zurita.ficklewriter.data.Note
 import com.zurita.ficklewriter.databinding.ListOptionsBinding
-
-interface NoteOptionsViewHolderListener
-{
-   fun onPinSelected(note: Note)
-   fun onEditSelected(note: Note)
-}
+import com.zurita.ficklewriter.ui.editor.EditorAdapterListener
 
 class NoteOptionsViewHolder(
    itemView: View,
-   listener: NoteOptionsViewHolderListener
+   listener: EditorAdapterListener
 ) : RecyclerView.ViewHolder(itemView),
     NoteViewHolderIntf
 {
